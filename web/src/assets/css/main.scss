@@ -1,0 +1,86 @@
+body,
+ul,
+ol,
+li,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+fieldset,
+table,
+td,
+img,
+div {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+body {
+    background: #fff;
+    color: #333;
+    font-size: 16px;
+    font-family: "Microsoft YaHei", "Microsoft Sans Serif", "Microsoft SanSerf", 微软雅黑;
+    background: url('../images/bg_body.jpg') top/cover no-repeat fixed;
+}
+
+ul,
+ol {
+    list-style-type: none;
+}
+
+select,
+input,
+img,
+select {
+    vertical-align: middle;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+    color: #606266;
+}
+
+a:hover,
+a:active,
+a:focus {
+    // color: #c00;
+    text-decoration: underline;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+.el-submenus .el-submenu__title {
+    height: 50px !important;
+    line-height: 50px !important;
+}
+
+.right .input .el-input__inner {
+    background: transparent !important;
+    border-right: none !important;
+}
+
+.right .input .el-input__inner:hover {
+    border-color: #909399;
+    border-right: none !important;
+}
+
+.right .input .el-input__inner:focus {
+    border-color: #fff;
+    border-right: none !important;
+}
+
+.right .input .el-input__inner::-webkit-input-placeholder {
+    color: #666 !important;
+}
+
+.right .input .el-input-group__append {
+    border: none;
+}
