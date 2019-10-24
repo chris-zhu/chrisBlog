@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-03 23:29:57
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-22 11:16:50
+ * @LastEditTime: 2019-10-23 12:13:43
  -->
 
 <template>
@@ -88,7 +88,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .nav {
   position: fixed;
   left: 0;

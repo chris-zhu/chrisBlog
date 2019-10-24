@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 21:08:22
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-22 22:03:13
+ * @LastEditTime: 2019-10-23 09:22:15
  */
 const Koa = require('koa')
 const mongoose = require('mongoose') //链接数据库
@@ -27,15 +27,8 @@ app.use(xmlParser({
 app.use(bodyParser())
 
 //connect database
-const db = require('./config/index')
-mongoose.connect(db, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('connect success')
-}).catch(err => {
-    console.log(err)
-})
+const connectDb = require('./config/db')
+connectDb()
 
 //路由
 const router = require('./routes')

@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-21 17:29:56
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-22 11:50:03
+ * @LastEditTime: 2019-10-23 12:14:26
  -->
 <template>
   <div>
@@ -41,6 +41,9 @@ export default {
   methods: {
     changeSkin() {
       console.log("换肤");
+    },
+    loadSkinList(){
+      
     }
   },
   created() {},
