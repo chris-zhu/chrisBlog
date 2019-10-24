@@ -4,12 +4,13 @@
  * @Author: sueRimn
  * @Date: 2019-10-24 13:35:40
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 13:47:47
+ * @LastEditTime: 2019-10-24 14:11:55
  */
 import {
     getToken,
     setToken
 } from "../../utils/auth";
+
 const state = {
     userId: '',
     token: getToken()
@@ -39,10 +40,11 @@ const actions = {
         commit('SET_TOKEN', token)
     },
 }
-export default {
+const user = {
     namespaced: true,
     state,
     getters,
     mutations,
     actions
 }
+export default user

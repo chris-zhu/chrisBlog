@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 21:08:22
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-23 09:22:15
+ * @LastEditTime: 2019-10-24 15:36:57
  */
 const Koa = require('koa')
 const mongoose = require('mongoose') //链接数据库
@@ -25,6 +25,15 @@ app.use(xmlParser({
     }
 }))
 app.use(bodyParser())
+
+//设置跨域请求
+app.use(async (ctx, next) => {
+    ctx.set({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    });
+    await next();
+});
 
 //connect database
 const connectDb = require('./config/db')

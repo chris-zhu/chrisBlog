@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-23 12:19:21
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 13:52:02
+ * @LastEditTime: 2019-10-24 15:46:23
  */
 import axios from 'axios';
 import qs from 'qs';
@@ -18,20 +18,20 @@ import {
 
 axios.defaults.timeout = 5000; //请求超时
 axios.defaults.baseURL = 'http://localhost:5000/api';
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 //http request 拦截器
 axios.interceptors.request.use(config => {
-        const token = getToken(); //引入pub.js里面获取token方法
+        const token = getToken();
         if (token) {
             config.headers['Authorization'] = token;
-            config.params = {
-                'token': token
-            }
         }
-        config.data = qs.stringify(config.data);
-        config.headers = {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
+        // if (config.method == 'post') {
+        //     console.log(config.data);
+        //     config.data = qs.stringify(config.data);
+        //     console.log(config.data);
+        // } else {
+        //     console.log(config.params);
+        // }
         return config;
     },
     error => {

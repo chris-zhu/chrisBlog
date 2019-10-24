@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-24 13:52:37
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 13:56:53
+ * @LastEditTime: 2019-10-24 15:47:38
  -->
 <template>
   <div>
@@ -25,7 +25,10 @@ export default {
   },
   methods: {
     login() {
-      postApi("/login", { account, password }).then(res => {
+      postApi("/login", {
+        account: this.account,
+        password: this.password
+      }).then(res => {
         console.log(res);
       });
     }

@@ -4,23 +4,17 @@
  * @Author: sueRimn
  * @Date: 2019-10-24 12:52:28
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 13:30:09
+ * @LastEditTime: 2019-10-24 14:15:55
  */
 
-function getToken() {
+export function getToken() {
     return localStorage.getItem('token')
 }
 
-function setToken(token) {
+export function setToken(token) {
     return localStorage.setItem('token', token)
 }
 
-function removeToken() {
+export function removeToken() {
     return localStorage.removeItem('token')
-}
-
-export default {
-    getToken,
-    setToken,
-    removeToken
 }
