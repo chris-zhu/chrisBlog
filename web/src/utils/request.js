@@ -4,10 +4,11 @@
  * @Author: sueRimn
  * @Date: 2019-10-23 12:19:21
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 15:46:23
+ * @LastEditTime: 2019-10-24 23:41:14
  */
 import axios from 'axios';
 import qs from 'qs';
+import store from '../store'
 import {
     getToken,
     removeToken
@@ -23,15 +24,8 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.interceptors.request.use(config => {
         const token = getToken();
         if (token) {
-            config.headers['Authorization'] = token;
+            config.headers['Authorization'] = "Chris " + token;
         }
-        // if (config.method == 'post') {
-        //     console.log(config.data);
-        //     config.data = qs.stringify(config.data);
-        //     console.log(config.data);
-        // } else {
-        //     console.log(config.params);
-        // }
         return config;
     },
     error => {
@@ -45,6 +39,10 @@ axios.interceptors.response.use(response => {
         // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据     
         // 否则的话抛出错误
         if (response.status === 200) {
+            let token = response.data.data.token
+            if (token !== '') {
+                store.dispatch('user/RefreshToken', token)
+            }
             return Promise.resolve(response);
         } else {
             return Promise.reject(response);

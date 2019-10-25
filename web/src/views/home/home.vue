@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-21 17:29:56
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-23 12:14:26
+ * @LastEditTime: 2019-10-24 20:19:08
  -->
 <template>
   <div>
@@ -20,10 +20,10 @@
           </div>
         </div>
       </div>
-      <div @click="changeSkin" title="更换皮肤" class="space-theme-trigger"></div>
+      <div @click="isShowSkin = true" title="更换皮肤" class="space-theme-trigger"></div>
     </div>
     <div class="skin_content">
-      <Skin></Skin>
+      <Skin v-show="isShowSkin" @close="isShowSkin = $event"></Skin>
     </div>
   </div>
 </template>
@@ -35,16 +35,16 @@ export default {
   data() {
     return {
       userface: "../../assets/images/preview.gif",
-      autograph: "console.log('人怂花朵')"
+      autograph: "console.log('人怂花朵')",
+      isShowSkin: false
     };
   },
   methods: {
     changeSkin() {
+      this.showSkin = true;
       console.log("换肤");
     },
-    loadSkinList(){
-      
-    }
+    loadSkinList() {}
   },
   created() {},
 
@@ -150,7 +150,7 @@ export default {
 .space-theme-trigger:hover {
   background-position: -522px 0;
 }
-.skin_content{
+.skin_content {
   width: 100vw;
   position: fixed;
   bottom: 0;

@@ -4,10 +4,10 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 21:08:22
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 15:36:57
+ * @LastEditTime: 2019-10-24 22:51:30
  */
 const Koa = require('koa')
-const mongoose = require('mongoose') //链接数据库
+// const mongoose = require('mongoose') //链接数据库
 const bodyParser = require('koa-bodyparser')
 const xmlParser = require('koa-xml-body')
 const path = require('path')

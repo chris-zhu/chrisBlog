@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-03 23:29:57
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-23 12:13:43
+ * @LastEditTime: 2019-10-24 22:20:11
  -->
 
 <template>
@@ -67,23 +67,92 @@
         <el-input class="input" placeholder="输入你感兴趣的吧" v-model="searchVal">
           <el-button slot="append" icon="el-icon-search" size="small"></el-button>
         </el-input>
-        <el-button plain style="margin-left:30px;" type="primary" icon="el-icon-s-promotion">Login</el-button>
+        <el-button
+          plain
+          style="margin-left:30px;"
+          @click="showLogin"
+          type="primary"
+          icon="el-icon-s-promotion"
+        >Login</el-button>
       </div>
     </div>
+    <el-dialog :modal="false" title="登录" :visible.sync="isShowLogin" width="27%" top="25vh" center>
+      <el-form :model="form" label-position="left" label-width="auto">
+        <el-form-item label="账号">
+          <el-input
+            v-model="form.account"
+            style="width: 295px;"
+            placeholder="请输入账号"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input
+            show-password
+            v-model="form.password"
+            style="width: 295px;"
+            placeholder="请输入密码"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="cancelClick">取 消</el-button>
+        <el-button type="success" @click="makeSureClick">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
+import { postApi } from "../utils/request";
 export default {
   data() {
     return {
       face:
         "https://6761-garbage-zy-jfq6e-1259641361.tcb.qcloud.la/imgs/preview.gif?sign=d0190b8fb7453c99b957f47819acf883&t=1570179961",
       activeIndex: "1",
-      searchVal: ""
+      searchVal: "", //搜索框的值
+      isShowLogin: false,
+      form: {
+        account: "",
+        password: ""
+      }
     };
   },
+  watch: {
+    isShowLogin(newvalue) {
+      if (!newvalue) {
+        this.form = {
+          account: "",
+          password: ""
+        };
+      }
+    }
+  },
   methods: {
-    handleSelect() {}
+    handleSelect() {},
+    showLogin() {
+      this.isShowLogin = true;
+    },
+    cancelClick() {
+      this.isShowLogin = false;
+    },
+    makeSureClick() {
+      if (this.form.account == '') {
+        this.$message.error("请输入账号");
+        return;
+      }
+      if (this.form.password == '') {
+        this.$message.error("请输入密码");
+        return;
+      }
+      let params = this.form;
+      postApi("/user/login", params).then(res => {
+        console.log(res);
+        this.isShowLogin = false;
+        this.$message.success("登录成功");
+      });
+    }
   }
 };
 </script>

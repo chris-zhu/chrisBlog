@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 09:49:22
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-22 20:28:40
+ * @LastEditTime: 2019-10-24 20:16:58
  -->
 /** 皮肤组件 */
 <template>
@@ -22,7 +22,7 @@
         <el-menu-item index="1">头图</el-menu-item>
         <el-menu-item index="2">主题</el-menu-item>
         <span @click="closeSkin" class="close">
-          <i class="el-icon-close"></i>
+          <i style="color: azure;" class="el-icon-close"></i>
         </span>
       </el-menu>
       <div class="skinCon">
@@ -67,7 +67,7 @@ export default {
       console.log(key);
     },
     closeSkin() {
-      console.log("close this skin");
+      this.$emit("close", false);
     },
     testUse() {
       console.log("i will test use");
