@@ -4,12 +4,12 @@
  * @Author: sueRimn
  * @Date: 2019-10-23 09:42:51
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-23 10:30:06
+ * @LastEditTime: 2019-10-25 12:40:20
  */
 let mongoose = require('mongoose')
 let Schema = mongoose.Schema
 let _ = require('lodash')
-let result = require('../../common/result')
+let result = require('../../utils/result')
 
 let schema = new Schema({
     id: {

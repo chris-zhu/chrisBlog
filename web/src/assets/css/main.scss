@@ -57,6 +57,10 @@ div {
     box-sizing: border-box;
 }
 
+.banSelect {
+    user-select: none;
+}
+
 .el-submenus .el-submenu__title {
     height: 50px !important;
     line-height: 50px !important;
@@ -83,4 +87,19 @@ div {
 
 .right .input .el-input-group__append {
     border: none;
+}
+
+.el-menu-item:focus,
+.el-menu-item:hover {
+    outline: 0 !important;
+    background-color: #ecf5ff !important;
+}
+
+.el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+    outline: 0;
+    color: #F56C6C !important;
+}
+
+.el-menu--horizontal>.el-submenu .el-submenu__title:hover {
+    background-color: #ecf5ff !important;
 }

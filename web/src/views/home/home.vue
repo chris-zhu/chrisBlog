@@ -4,15 +4,20 @@
  * @Author: sueRimn
  * @Date: 2019-10-21 17:29:56
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 20:19:08
+ * @LastEditTime: 2019-10-25 20:09:41
  -->
 <template>
   <div>
     <div class="header">
       <div class="user">
-        <div class="h-avatar">
+        <el-popover placement="top-start" width="100" trigger="hover" content="这个人很帅·~~">
+          <div slot="reference" class="h-avatar">
+            <img src="../../assets/images/preview.gif" alt />
+          </div>
+        </el-popover>
+        <!-- <div class="h-avatar">
           <img src="../../assets/images/preview.gif" alt />
-        </div>
+        </div>-->
         <div class="userInfo">
           <span class="name">Chris</span>
           <div class="autograph">

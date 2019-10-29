@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-23 12:19:21
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 23:41:14
+ * @LastEditTime: 2019-10-25 20:23:59
  */
 import axios from 'axios';
 import qs from 'qs';
@@ -24,7 +24,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.interceptors.request.use(config => {
         const token = getToken();
         if (token) {
-            config.headers['Authorization'] = "Chris " + token;
+            config.headers['Authorization'] = token;
         }
         return config;
     },
@@ -39,7 +39,7 @@ axios.interceptors.response.use(response => {
         // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据     
         // 否则的话抛出错误
         if (response.status === 200) {
-            let token = response.data.data.token
+            let token = response.data.data.token.data
             if (token !== '') {
                 store.dispatch('user/RefreshToken', token)
             }
@@ -55,12 +55,16 @@ axios.interceptors.response.use(response => {
                 // 未登录则跳转登录页面，并携带当前页面的路径
                 // 在登录成功后返回当前页面，这一步需要在登录页操作。                
                 case 401:
-                    router.replace({
-                        path: '/login',
-                        query: {
-                            redirect: router.currentRoute.fullPath
-                        }
-                    });
+                    // router.replace({
+                    //     path: '/',
+                    //     query: {
+                    //         redirect: router.currentRoute.fullPath
+                    //     }
+                    // });
+                    Message({
+                        message: '请先登录后操作',
+                        type: 'warning'
+                    })
                     break;
 
                     // 403 token过期

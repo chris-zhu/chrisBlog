@@ -4,13 +4,15 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 21:08:22
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 22:51:30
+ * @LastEditTime: 2019-10-29 09:16:13
  */
 const Koa = require('koa')
 // const mongoose = require('mongoose') //链接数据库
 const bodyParser = require('koa-bodyparser')
 const xmlParser = require('koa-xml-body')
 const path = require('path')
+const JwtUtil = require('./utils/jwt')
+const Result = require('./utils/result')
 
 const app = new Koa()
 
@@ -26,14 +28,33 @@ app.use(xmlParser({
 }))
 app.use(bodyParser())
 
-//设置跨域请求
+//设置跨域请求npm
 app.use(async (ctx, next) => {
     ctx.set({
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+        'Access-Control-Allow-Methods': 'PUT, POST, GET, DELETE, OPTIONS'
     });
     await next();
 });
+
+//设置token验证
+app.use(async (ctx, next) => {
+    // if (ctx.request.url != '/api/user/login') {
+    //     let token = ctx.header.authorization
+    //     let jwt = new JwtUtil(token);
+    //     let res = jwt.verifyToken();
+    //     if (res == 'err') {
+    //         return ctx.body = Result.errorResult('登录已过期,请重新登录', null)
+    //     } else {
+    //         await next();
+    //     }
+    // } else {
+    //     await next();
+    // }
+    next()
+});
+
 
 //connect database
 const connectDb = require('./config/db')

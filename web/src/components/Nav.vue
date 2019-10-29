@@ -4,11 +4,11 @@
  * @Author: sueRimn
  * @Date: 2019-10-03 23:29:57
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 22:20:11
+ * @LastEditTime: 2019-10-28 21:46:56
  -->
 
 <template>
-  <div class="nav">
+  <div class="nav banSelect">
     <div class="nav-container">
       <div class="left">
         <a class="logo">
@@ -65,15 +65,30 @@
       </div>
       <div class="right">
         <el-input class="input" placeholder="输入你感兴趣的吧" v-model="searchVal">
-          <el-button slot="append" icon="el-icon-search" size="small"></el-button>
+          <el-button @click="serach" slot="append" icon="el-icon-search" size="small"></el-button>
         </el-input>
         <el-button
+          v-if="!token"
           plain
           style="margin-left:30px;"
           @click="showLogin"
           type="primary"
           icon="el-icon-s-promotion"
         >Login</el-button>
+        <el-popover v-else placement="bottom" width="160" v-model="visible">
+          <p style="margin-bottom:5px;">你要走了嘛 ? 主人~~</p>
+          <div style="text-align: right; margin: 0">
+            <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+            <el-button type="primary" size="mini" @click="logout">确定</el-button>
+          </div>
+          <el-button
+            plain
+            style="margin-left:30px;"
+            type="danger"
+            icon="el-icon-lollipop"
+            slot="reference"
+          >Logout</el-button>
+        </el-popover>
       </div>
     </div>
     <el-dialog :modal="false" title="登录" :visible.sync="isShowLogin" width="27%" top="25vh" center>
@@ -104,7 +119,9 @@
   </div>
 </template>
 <script>
-import { postApi } from "../utils/request";
+import { postApi, getApi } from "../utils/request";
+import { getToken, removeToken } from "../utils/auth";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -116,7 +133,8 @@ export default {
       form: {
         account: "",
         password: ""
-      }
+      },
+      visible: false
     };
   },
   watch: {
@@ -129,7 +147,13 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState("user", ["token"])
+  },
   methods: {
+    serach() {
+      this.getUserInfo();
+    },
     handleSelect() {},
     showLogin() {
       this.isShowLogin = true;
@@ -137,21 +161,35 @@ export default {
     cancelClick() {
       this.isShowLogin = false;
     },
+    /** login */
     makeSureClick() {
-      if (this.form.account == '') {
+      if (this.form.account == "") {
         this.$message.error("请输入账号");
         return;
       }
-      if (this.form.password == '') {
+      if (this.form.password == "") {
         this.$message.error("请输入密码");
         return;
       }
       let params = this.form;
       postApi("/user/login", params).then(res => {
-        console.log(res);
+        // console.log(res);
         this.isShowLogin = false;
         this.$message.success("登录成功");
+        this.getUserInfo();
       });
+    },
+    getUserInfo() {
+      let userId = getToken();
+      getApi("/user/userInfo", { userId }).then(res => {
+        console.log(res);
+      });
+    },
+    /** logout */
+    logout() {
+      this.visible = false;
+      this.$store.dispatch("user/RefreshToken", null);
+      removeToken();
     }
   }
 };

@@ -4,13 +4,13 @@
  * @Author: sueRimn
  * @Date: 2019-10-23 09:42:51
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 23:36:53
+ * @LastEditTime: 2019-10-29 09:33:10
  */
 let mongoose = require('mongoose')
 let Schema = mongoose.Schema
 let _ = require('lodash')
-let result = require('../../common/result')
-let jwt = require('jsonwebtoken');
+let result = require('../../utils/result')
+let Jwt = require('../../utils/jwt');
 let schema = new Schema({
     name: {
         type: String,
@@ -36,6 +36,10 @@ let schema = new Schema({
         type: String,
         default: null
     },
+    topBg: {
+        type: String,
+        default: null
+    },
     date: {
         type: Date,
         default: Date.now
@@ -54,20 +58,39 @@ module.exports = {
         let query = {
             account
         }
-        let findResult = await model.findOne(query)
-        if (!findResult) {
-            return ctx.body = result.errorResult('账号不存在', null)
-        } else if (findResult.password !== password) {
-            return ctx.body = result.errorResult('密码错误', null)
-        } else {
-            let payload = {
-                _id: findResult._id,
-                time: new Date().getTime(),
-                timeout: 1000 * 60 * 60 * 2
+        
+        model.find(query, (err, findResult) => {
+            if (err) {
+                console.log(err)
+                return ctx.body = result.errorResult('error', null)
+            } else {
+                console.log(findResult);
+                if (!findResult) {
+                    return ctx.body = result.errorResult('账号不存在', null)
+                } else if (findResult.password !== password) {
+                    return ctx.body = result.errorResult('密码错误', null)
+                } else {
+                    let token = Jwt.generateToken({
+                        _id: findResult._id
+                    });
+                    console.log(token)
+                    return ctx.body = result.defaultResult('登录成功', {
+                        token
+                    })
+                }
             }
-            let token = jwt.sign(payload, 'Chris ');
-            return ctx.body = result.defaultResult('登录成功', {
-                token
+        })
+    },
+    async userInfo(ctx) {
+        let {
+            userId
+        } = ctx.query
+        let findResult = await model.findById(userId)
+        if (!findResult) {
+            return ctx.body = result.errorResult('用户信息不存在', null)
+        } else {
+            return ctx.body = result.defaultResult('success', {
+                userInfo: findResult
             })
         }
     }

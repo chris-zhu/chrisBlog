@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 21:32:46
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 22:57:25
+ * @LastEditTime: 2019-10-25 13:22:50
  */
 const Router = require('koa-router')
 const router = new Router()
@@ -14,6 +14,7 @@ router.get('/topbg/list', topBgCtrl.list)
 
 let userCtrl = require('../controller/base/user')
 router.post('/user/login', userCtrl.login)
+router.get('/user/userInfo', userCtrl.userInfo)
 // router.get('/user/userinfo', userCtrl.userinfo)
 
 
