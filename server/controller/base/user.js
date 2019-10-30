@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-23 09:42:51
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-29 09:33:10
+ * @LastEditTime: 2019-10-29 21:55:58
  */
 let mongoose = require('mongoose')
 let Schema = mongoose.Schema
@@ -58,34 +58,28 @@ module.exports = {
         let query = {
             account
         }
-        
-        model.find(query, (err, findResult) => {
-            if (err) {
-                console.log(err)
-                return ctx.body = result.errorResult('error', null)
-            } else {
-                console.log(findResult);
-                if (!findResult) {
-                    return ctx.body = result.errorResult('账号不存在', null)
-                } else if (findResult.password !== password) {
-                    return ctx.body = result.errorResult('密码错误', null)
-                } else {
-                    let token = Jwt.generateToken({
-                        _id: findResult._id
-                    });
-                    console.log(token)
-                    return ctx.body = result.defaultResult('登录成功', {
-                        token
-                    })
-                }
-            }
-        })
+        let findResult = await model.findOne(query)
+        if (!findResult) {
+            return ctx.body = result.errorResult('账号不存在', null)
+        } else if (findResult.password !== password) {
+            return ctx.body = result.errorResult('密码错误', null)
+        } else {
+            let token = Jwt.generateToken({
+                _id: findResult._id
+            });
+            return ctx.body = result.defaultResult('登录成功', {
+                token
+            })
+        }
     },
     async userInfo(ctx) {
         let {
-            userId
+            _id
         } = ctx.query
-        let findResult = await model.findById(userId)
+        let findResult = await model.findById(_id, {
+            'account': 0,
+            'password': 0
+        })
         if (!findResult) {
             return ctx.body = result.errorResult('用户信息不存在', null)
         } else {
@@ -93,5 +87,11 @@ module.exports = {
                 userInfo: findResult
             })
         }
+    },
+    async createUser(ctx) {
+        let findResult = await model.create({})
+        return ctx.body = result.defaultResult('success', {
+            userInfo: findResult
+        })
     }
 }

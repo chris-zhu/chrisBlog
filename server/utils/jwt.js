@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-25 12:38:22
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-28 21:55:07
+ * @LastEditTime: 2019-10-29 20:24:53
  */
 // 引入模块依赖
 const fs = require('fs');
@@ -20,25 +20,20 @@ const Jwt = {
             expiresIn: '2h' //过期时间
         });
         return token;
-    }
+    },
     // 校验token
-    // verifyToken(token) {
-    //     let res;
-    //     try {
-    //         jwt.verify(token, secert, (err, res) => {
-    //             if (err) {
-    //                 console.log(err)
-    //             } else {
-    //                 return res
-    //             }
-    //         });
-    //         res = true
-    //     } catch (e) {
-    //         console.log(e)
-    //         res = 'err';
-    //     }
-    //     return res;
-    // }
+    verifyToken(token) {
+        let result;
+        try {
+            jwt.verify(token, secert, (err, data) => {
+                if (err) result = 'error'
+                else result = data
+            })
+        } catch (err) {
+            result = 'error'
+        }
+        return result
+    }
 }
 
 module.exports = Jwt;

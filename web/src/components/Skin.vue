@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 09:49:22
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 20:16:58
+ * @LastEditTime: 2019-10-29 21:35:12
  -->
 /** 皮肤组件 */
 <template>
@@ -31,13 +31,13 @@
             <el-col v-for="bg_item in item" :key="bg_item._id" :span="8">
               <div
                 class="grid-content"
-                style="background-image: url('//i0.hdslb.com/bfs/space/cb1c3ef50e22b6096fde67febe863494caefebad.png');"
+                :style="'background-image:url(' + bg_item.l_img + ');'"
                 @click="testUse"
               >
                 <div class="img-detail">
                   <div class="img-meta">
                     <div class="imgInfo">
-                      <span class="img-title">哈哈哈</span>
+                      <span class="img-title">{{bg_item.product_name}}</span>
                       <span style="color:#ccd0d7" class="img-desc">免费</span>
                     </div>
                     <el-button type="primary" size="mini">使用</el-button>
@@ -53,13 +53,14 @@
 </template>
 
 <script>
+import { getApi } from "../utils/request";
 export default {
   name: "Skin",
   data() {
     return {
-      activeIndex: "1",
-      bgList: [[1, 1, 1], [1, 1, 1], [1, 1, 1], 1],
-      bgActive: -1
+      activeIndex: "1", // 导航
+      bgList: [], // 所有背景图
+      bgActive: -1 //
     };
   },
   methods: {
@@ -71,11 +72,22 @@ export default {
     },
     testUse() {
       console.log("i will test use");
+    },
+    loadAllTopBg() {
+      getApi("/topbg/list", {}).then(res => {
+        let bgs = res.data.data;
+        let bgList = [];
+        for (let i = 0; i < bgs.length; i += 3) {
+          bgList.push(bgs.slice(i, i + 3));
+        }
+        this.bgList = bgList;
+      });
     }
   },
   created() {},
-
-  mounted() {}
+  mounted() {
+    this.loadAllTopBg();
+  }
 };
 </script>
 <style lang="scss" scoped>

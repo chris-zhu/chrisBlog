@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-21 17:29:56
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-25 20:09:41
+ * @LastEditTime: 2019-10-29 21:22:50
  -->
 <template>
   <div>
@@ -12,29 +12,29 @@
       <div class="user">
         <el-popover placement="top-start" width="100" trigger="hover" content="这个人很帅·~~">
           <div slot="reference" class="h-avatar">
-            <img src="../../assets/images/preview.gif" alt />
+            <el-avatar :size="60" :src="userInfo.avatar">
+              <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+            </el-avatar>
           </div>
         </el-popover>
-        <!-- <div class="h-avatar">
-          <img src="../../assets/images/preview.gif" alt />
-        </div>-->
         <div class="userInfo">
-          <span class="name">Chris</span>
+          <span class="name">{{userInfo.name}}</span>
           <div class="autograph">
-            <input type="text" v-model="autograph" />
+            <input type="text" v-model="userInfo.sign" />
           </div>
         </div>
       </div>
       <div @click="isShowSkin = true" title="更换皮肤" class="space-theme-trigger"></div>
     </div>
-    <div class="skin_content">
-      <Skin v-show="isShowSkin" @close="isShowSkin = $event"></Skin>
+    <div class="skin_content" :style="{'bottom':isShowSkin?'0px':'-580px'}">
+      <Skin @close="isShowSkin = $event"></Skin>
     </div>
   </div>
 </template>
 
 <script>
 import Skin from "../../components/Skin";
+import { mapState } from "vuex";
 export default {
   name: "home",
   data() {
@@ -51,8 +51,10 @@ export default {
     },
     loadSkinList() {}
   },
+  computed: {
+    ...mapState("user", ["userInfo"])
+  },
   created() {},
-
   mounted() {},
   components: {
     Skin
@@ -158,7 +160,7 @@ export default {
 .skin_content {
   width: 100vw;
   position: fixed;
-  bottom: 0;
   left: 0;
+  transition: 0.4s all ease-in-out;
 }
 </style>

@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-03 23:29:57
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-28 21:46:56
+ * @LastEditTime: 2019-10-29 21:31:53
  -->
 
 <template>
@@ -13,7 +13,9 @@
       <div class="left">
         <a class="logo">
           <h3>Chris`s Blog</h3>
-          <el-avatar class="userface" :src="face"></el-avatar>
+          <el-avatar class="userface" :src="userInfo.avatar">
+            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+          </el-avatar>
         </a>
       </div>
       <div class="middle">
@@ -113,7 +115,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cancelClick">取 消</el-button>
-        <el-button type="success" @click="makeSureClick">确 定</el-button>
+        <el-button type="success" @click="makeSureClick" @keyup.enter="makeSureClick">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -125,8 +127,6 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      face:
-        "https://6761-garbage-zy-jfq6e-1259641361.tcb.qcloud.la/imgs/preview.gif?sign=d0190b8fb7453c99b957f47819acf883&t=1570179961",
       activeIndex: "1",
       searchVal: "", //搜索框的值
       isShowLogin: false,
@@ -148,11 +148,11 @@ export default {
     }
   },
   computed: {
-    ...mapState("user", ["token"])
+    ...mapState("user", ["token", "userInfo"])
   },
   methods: {
     serach() {
-      this.getUserInfo();
+      // this.getUserInfo();
     },
     handleSelect() {},
     showLogin() {
@@ -173,7 +173,6 @@ export default {
       }
       let params = this.form;
       postApi("/user/login", params).then(res => {
-        // console.log(res);
         this.isShowLogin = false;
         this.$message.success("登录成功");
         this.getUserInfo();
@@ -181,8 +180,8 @@ export default {
     },
     getUserInfo() {
       let userId = getToken();
-      getApi("/user/userInfo", { userId }).then(res => {
-        console.log(res);
+      getApi("/user/userInfo", {}).then(res => {
+        this.$store.dispatch("user/RefreshUserInfo", res.data.userInfo);
       });
     },
     /** logout */

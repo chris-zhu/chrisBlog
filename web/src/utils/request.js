@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-23 12:19:21
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-25 20:23:59
+ * @LastEditTime: 2019-10-29 20:43:13
  */
 import axios from 'axios';
 import qs from 'qs';
@@ -36,15 +36,17 @@ axios.interceptors.request.use(config => {
 
 //http response 拦截器
 axios.interceptors.response.use(response => {
-        // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据     
-        // 否则的话抛出错误
-        if (response.status === 200) {
-            let token = response.data.data.token.data
-            if (token !== '') {
+        if (response.status === 200 && response.data.status === 200) {
+            let token = response.data.data.token
+            if (token) {
                 store.dispatch('user/RefreshToken', token)
             }
             return Promise.resolve(response);
         } else {
+            Message({
+                message: response.data.msg,
+                type: 'warning'
+            })
             return Promise.reject(response);
         }
     },

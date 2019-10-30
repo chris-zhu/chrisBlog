@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-24 13:35:40
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 14:11:55
+ * @LastEditTime: 2019-10-29 20:53:33
  */
 import {
     getToken,
@@ -12,33 +12,33 @@ import {
 } from "../../utils/auth";
 
 const state = {
-    userId: '',
-    token: getToken()
+    token: getToken(),
+    userInfo: {}
 }
 const getters = {
-    userId: state => state.userId,
-    token: state => state.token
+    token: state => state.token,
+    userInfo: state => state.userInfo,
 }
 const mutations = {
-    SET_USERID(state, userId) {
-        state.userId = userId
-    },
     SET_TOKEN(state, token) {
         state.token = token
+    },
+    SET_USERINFO(state, userInfo) {
+        state.userInfo = userInfo
     }
 }
 const actions = {
-    refreshUserId({
-        commit
-    }, userId) {
-        commit('SET_USERID', userId)
-    },
     RefreshToken: ({
         commit
     }, token) => {
         setToken(token)
         commit('SET_TOKEN', token)
     },
+    RefreshUserInfo: ({
+        commit
+    }, userInfo) => {
+        commit('SET_USERINFO', userInfo)
+    }
 }
 const user = {
     namespaced: true,
