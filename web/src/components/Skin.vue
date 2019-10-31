@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 09:49:22
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-29 21:35:12
+ * @LastEditTime: 2019-10-30 17:26:04
  -->
 /** 皮肤组件 */
 <template>
@@ -27,7 +27,7 @@
       </el-menu>
       <div class="skinCon">
         <div class="skinList">
-          <el-row v-for="(item,index) in bgList" :key="index" :gutter="20">
+          <!-- <el-row v-for="(item,index) in bgList" :key="index" :gutter="20">
             <el-col v-for="bg_item in item" :key="bg_item._id" :span="8">
               <div
                 class="grid-content"
@@ -43,6 +43,12 @@
                     <el-button type="primary" size="mini">使用</el-button>
                   </div>
                 </div>
+              </div>
+            </el-col>
+          </el-row>-->
+          <el-row :gutter="20">
+            <el-col v-for="(item) in bgList" :key="item._id">
+              <div class="bg_box">
               </div>
             </el-col>
           </el-row>
@@ -75,12 +81,14 @@ export default {
     },
     loadAllTopBg() {
       getApi("/topbg/list", {}).then(res => {
-        let bgs = res.data.data;
-        let bgList = [];
-        for (let i = 0; i < bgs.length; i += 3) {
-          bgList.push(bgs.slice(i, i + 3));
-        }
-        this.bgList = bgList;
+        // let bgs = res.data.data;
+        // let bgList = [];
+        // for (let i = 0; i < bgs.length; i += 3) {
+        //   bgList.push(bgs.slice(i, i + 3));
+        // }
+        // this.bgList = bgList;
+        this.bgList = res.data.data;
+        console.log(this.bgList);
       });
     }
   },
@@ -168,67 +176,68 @@ export default {
 .el-col {
   border-radius: 4px;
 }
-.grid-content {
-  border: 3px solid #555;
-  border-radius: 12px;
-  cursor: pointer;
-  float: left;
-  width: 353px;
-  height: 90px;
-  position: relative;
-  // margin: 0 25px 20px 0;
-  background-size: cover;
-  background-position: 50%;
-  transition: all 0.3s ease-in-out;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
-.grid-content:hover .img-detail {
-  opacity: 1 !important;
-  display: block !important;
-}
-.grid-content:hover {
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-}
-.img-detail {
-  background-repeat: no-repeat;
-  border: 3px solid #555;
-  border-radius: 12px;
-  opacity: 0;
-  display: none;
-  transition: all 0.3s ease-in-out;
-  overflow: hidden;
-  position: absolute;
-  top: -3px;
-  left: -3px;
-  width: 100%;
-  box-sizing: content-box;
-  z-index: 999;
-}
-.img-detail .img-meta {
-  background: #333;
-  line-height: 1em;
-  margin-top: 87px;
-  padding: 10px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.img-meta .imgInfo {
-  display: flex;
-  flex-direction: column;
-}
-.imgInfo .img-title {
-  color: #fff;
-  font-size: 14px;
-}
-.imgInfo .img-desc {
-  color: #fff;
-  font-size: 12px;
-  margin-top: 5px;
-}
+/*
+// .grid-content {
+//   border: 3px solid #555;
+//   border-radius: 12px;
+//   cursor: pointer;
+//   float: left;
+//   width: 353px;
+//   height: 90px;
+//   position: relative;
+//   // margin: 0 25px 20px 0;
+//   background-size: cover;
+//   background-position: 50%;
+//   transition: all 0.3s ease-in-out;
+// }
+// .row-bg {
+//   padding: 10px 0;
+//   background-color: #f9fafc;
+// }
+// .grid-content:hover .img-detail {
+//   opacity: 1 !important;
+//   display: block !important;
+// }
+// .grid-content:hover {
+//   border-bottom-left-radius: 0 !important;
+//   border-bottom-right-radius: 0 !important;
+// }
+// .img-detail {
+//   background-repeat: no-repeat;
+//   border: 3px solid #555;
+//   border-radius: 12px;
+//   opacity: 0;
+//   display: none;
+//   transition: all 0.3s ease-in-out;
+//   overflow: hidden;
+//   position: absolute;
+//   top: -3px;
+//   left: -3px;
+//   width: 100%;
+//   box-sizing: content-box;
+//   z-index: 999;
+// }
+// .img-detail .img-meta {
+//   background: #333;
+//   line-height: 1em;
+//   margin-top: 87px;
+//   padding: 10px;
+//   position: relative;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+// }
+// .img-meta .imgInfo {
+//   display: flex;
+//   flex-direction: column;
+// }
+// .imgInfo .img-title {
+//   color: #fff;
+//   font-size: 14px;
+// }
+// .imgInfo .img-desc {
+//   color: #fff;
+//   font-size: 12px;
+//   margin-top: 5px;
+// }*/
 </style>

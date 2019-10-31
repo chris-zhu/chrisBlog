@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-23 12:19:21
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-29 20:43:13
+ * @LastEditTime: 2019-10-30 20:38:46
  */
 import axios from 'axios';
 import qs from 'qs';
@@ -43,6 +43,7 @@ axios.interceptors.response.use(response => {
             }
             return Promise.resolve(response);
         } else {
+            removeToken()
             Message({
                 message: response.data.msg,
                 type: 'warning'

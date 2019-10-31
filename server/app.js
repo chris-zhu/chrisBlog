@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 21:08:22
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-29 20:37:21
+ * @LastEditTime: 2019-10-31 09:39:05
  */
 const Koa = require('koa')
 // const mongoose = require('mongoose') //链接数据库
@@ -39,13 +39,15 @@ app.use(async (ctx, next) => {
 });
 
 //设置token验证
+const notVerifyRoutes = require('./utils/notVerify')
 app.use(async (ctx, next) => {
-    if (ctx.request.url != '/api/user/login') {
+    console.log(notVerifyRoutes.indexOf(ctx.request.url));
+    if (notVerifyRoutes.indexOf(ctx.request.url) < 0) {
         let token = ctx.header.authorization
         let res = JwtUtil.verifyToken(token);
         if (res === 'error') {
             return ctx.body = Result.errorResult('登录已过期,请重新登录', null)
-        }else{
+        } else {
             ctx.query._id = res._id
         }
     }
