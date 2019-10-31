@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 09:49:22
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-31 16:14:58
+ * @LastEditTime: 2019-10-31 17:02:54
  -->
 /** 皮肤组件 */
 <template>
@@ -33,7 +33,7 @@
               :key="item._id"
               class="toutu-item"
               :class="{'active' : bgActive == i}"
-              @click="bgActive = i"
+              @click.stop="bgActive = i"
               :style="'background-image:url(' + item.l_img + ');'"
             >
               <div class="toutu-detail">
@@ -73,7 +73,10 @@ export default {
       this.$emit("close", false);
     },
     testUse(i) {
-      console.log("i will use" + i);
+      let topBg = this.bgList[i].l_img;
+      getApi("/user/updateUserInfo", { topBg }).then(res => {
+        console.log(res);
+      });
     },
     loadAllTopBg() {
       getApi("/topbg/list", {}).then(res => {
@@ -91,6 +94,11 @@ export default {
   created() {},
   mounted() {
     this.loadAllTopBg();
+  },
+  watch: {
+    bgActive(index) {
+      this.$emit("changeBg", this.bgList[index].l_img);
+    }
   }
 };
 </script>

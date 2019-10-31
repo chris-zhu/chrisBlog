@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-23 09:42:51
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-29 21:55:58
+ * @LastEditTime: 2019-10-31 17:15:19
  */
 let mongoose = require('mongoose')
 let Schema = mongoose.Schema
@@ -82,6 +82,26 @@ module.exports = {
         })
         if (!findResult) {
             return ctx.body = result.errorResult('用户信息不存在', null)
+        } else {
+            return ctx.body = result.defaultResult('success', {
+                userInfo: findResult
+            })
+        }
+    },
+    async updateUserInfo(ctx) {
+        let {
+            _id
+        } = ctx.query
+        const params = {
+            ...ctx.query
+        }
+        delete params._id
+        const query = {
+            _id
+        }
+        let findResult = await model.update(query, params)
+        if (!findResult) {
+            return ctx.body = result.errorResult('error', null)
         } else {
             return ctx.body = result.defaultResult('success', {
                 userInfo: findResult

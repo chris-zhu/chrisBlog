@@ -4,11 +4,11 @@
  * @Author: sueRimn
  * @Date: 2019-10-21 17:29:56
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-29 21:22:50
+ * @LastEditTime: 2019-10-31 16:55:25
  -->
 <template>
   <div>
-    <div class="header">
+    <div v-show="token" class="header" :style="'background-image:url(' + userInfo.topBg + ');'">
       <div class="user">
         <el-popover placement="top-start" width="100" trigger="hover" content="这个人很帅·~~">
           <div slot="reference" class="h-avatar">
@@ -27,7 +27,7 @@
       <div @click="isShowSkin = true" title="更换皮肤" class="space-theme-trigger"></div>
     </div>
     <div class="skin_content" :style="{'bottom':isShowSkin?'0px':'-580px'}">
-      <Skin @close="isShowSkin = $event"></Skin>
+      <Skin @close="closeSkin" @changeBg="userInfo.topBg = $event"></Skin>
     </div>
   </div>
 </template>
@@ -35,6 +35,8 @@
 <script>
 import Skin from "../../components/Skin";
 import { mapState } from "vuex";
+import { postApi, getApi } from "../../utils/request";
+import { getToken, removeToken } from "../../utils/auth";
 export default {
   name: "home",
   data() {
@@ -45,14 +47,23 @@ export default {
     };
   },
   methods: {
+    closeSkin(flag) {
+      this.isShowSkin = flag;
+      this.getUserInfo();
+    },
+    getUserInfo() {
+      let userId = getToken();
+      getApi("/user/userInfo", {}).then(res => {
+        this.$store.dispatch("user/RefreshUserInfo", res.data.userInfo);
+      });
+    },
     changeSkin() {
       this.showSkin = true;
-      console.log("换肤");
     },
     loadSkinList() {}
   },
   computed: {
-    ...mapState("user", ["userInfo"])
+    ...mapState("user", ["token", "userInfo"])
   },
   created() {},
   mounted() {},
@@ -65,7 +76,9 @@ export default {
 .header {
   width: 100%;
   height: 200px;
-  background: url("../../assets/images/main_top_bg1.png") center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* background: url("../../assets/images/main_top_bg1.png") center center; */
   position: relative;
 }
 .header .user {

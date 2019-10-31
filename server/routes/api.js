@@ -15,7 +15,8 @@ router.get('/topbg/list', topBgCtrl.list)
 let userCtrl = require('../controller/base/user')
 router.post('/user/login', userCtrl.login)
 router.get('/user/userInfo', userCtrl.userInfo)
-router.get('/user/createUser', userCtrl.createUser)
+router.get('/user/updateUserInfo', userCtrl.updateUserInfo)
+// router.get('/user/createUser', userCtrl.createUser)
 
 
 router.get('/', async (ctx) => {
