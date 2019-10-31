@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-03 23:29:57
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-29 21:31:53
+ * @LastEditTime: 2019-10-31 14:02:43
  -->
 
 <template>
@@ -101,6 +101,7 @@
             style="width: 295px;"
             placeholder="请输入账号"
             autocomplete="off"
+            @keyup.enter.native="makeSureClick"
           ></el-input>
         </el-form-item>
         <el-form-item label="密码">
@@ -110,12 +111,13 @@
             style="width: 295px;"
             placeholder="请输入密码"
             autocomplete="off"
+            @keyup.enter.native="makeSureClick"
           ></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cancelClick">取 消</el-button>
-        <el-button type="success" @click="makeSureClick" @keyup.enter="makeSureClick">确 定</el-button>
+        <el-button type="success" @click="makeSureClick">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -189,6 +191,11 @@ export default {
       this.visible = false;
       this.$store.dispatch("user/RefreshToken", null);
       removeToken();
+    }
+  },
+  mounted() {
+    if (this.token) {
+      this.getUserInfo();
     }
   }
 };

@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 09:49:22
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-30 17:26:04
+ * @LastEditTime: 2019-10-31 16:14:58
  -->
 /** 皮肤组件 */
 <template>
@@ -26,32 +26,28 @@
         </span>
       </el-menu>
       <div class="skinCon">
-        <div class="skinList">
-          <!-- <el-row v-for="(item,index) in bgList" :key="index" :gutter="20">
-            <el-col v-for="bg_item in item" :key="bg_item._id" :span="8">
-              <div
-                class="grid-content"
-                :style="'background-image:url(' + bg_item.l_img + ');'"
-                @click="testUse"
-              >
-                <div class="img-detail">
-                  <div class="img-meta">
-                    <div class="imgInfo">
-                      <span class="img-title">{{bg_item.product_name}}</span>
-                      <span style="color:#ccd0d7" class="img-desc">免费</span>
-                    </div>
-                    <el-button type="primary" size="mini">使用</el-button>
+        <div class="skins">
+          <ul class="bgList-inner clear banSelect">
+            <li
+              v-for="(item,i) in bgList"
+              :key="item._id"
+              class="toutu-item"
+              :class="{'active' : bgActive == i}"
+              @click="bgActive = i"
+              :style="'background-image:url(' + item.l_img + ');'"
+            >
+              <div class="toutu-detail">
+                <div class="toutu-meta">
+                  <div class="toutu-title">{{item.product_name}}</div>
+                  <div class="toutu-price">免费</div>
+                  <div @click.stop="testUse(i)" class="toutu-action">
+                    <span class="toutu-btn use">使用</span>
                   </div>
                 </div>
               </div>
-            </el-col>
-          </el-row>-->
-          <el-row :gutter="20">
-            <el-col v-for="(item) in bgList" :key="item._id">
-              <div class="bg_box">
-              </div>
-            </el-col>
-          </el-row>
+              <span v-show="bgActive == i" class="tou-selected"></span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -76,8 +72,8 @@ export default {
     closeSkin() {
       this.$emit("close", false);
     },
-    testUse() {
-      console.log("i will test use");
+    testUse(i) {
+      console.log("i will use" + i);
     },
     loadAllTopBg() {
       getApi("/topbg/list", {}).then(res => {
@@ -162,20 +158,101 @@ export default {
   border-radius: 10px;
 }
 
-.skinCon .skinList {
+.skinCon .skins {
   width: 1160px;
-  padding: 20px 30px 80px;
+  padding: 20px 0 0 30px;
   margin: 0 auto;
 }
-.el-row {
-  margin-bottom: 20px;
-  &:last-child {
-    margin-bottom: 0;
-  }
+.toutu-item.active {
+  border-color: #fff;
 }
-.el-col {
+.toutu-item {
+  border: 3px solid #555;
+  border-radius: 12px;
+  cursor: pointer;
+  float: left;
+  width: 345px;
+  height: 96px;
+  position: relative;
+  margin: 0 25px 20px 0;
+  background-size: cover;
+  background-position: 50%;
+  transition: all 0.3s ease-in-out;
+}
+.tou-selected {
+  position: absolute;
+}
+.toutu-item:hover {
+  z-index: 3;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.toutu-item:hover .toutu-detail {
+  left: -3px;
+  // opacity: 1;
+  z-index: 10;
+}
+.toutu-item.active .toutu-detail {
+  border-color: #fff;
+}
+.toutu-detail {
+  background-repeat: no-repeat;
+  border: 3px solid #555;
+  border-radius: 12px;
+  // opacity: 0;
+  transition: opacity 0.2s ease;
+  overflow: hidden;
+  position: absolute;
+  top: -3px;
+  left: -9999px;
+  width: 100%;
+  box-sizing: content-box;
+}
+.toutu-meta {
+  background: #333;
+  line-height: 1em;
+  margin-top: 100px;
+  padding: 10px;
+  position: relative;
+}
+.toutu-title {
+  color: #fff;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+.toutu-price {
+  color: #ccd0d7;
+  font-size: 13px;
+}
+.toutu-action {
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+}
+.toutu-btn.use {
+  background: #00a1d6;
+}
+.toutu-btn {
   border-radius: 4px;
+  display: inline-block;
+  text-align: center;
+  line-height: 24px;
+  /* margin-left: 7px; */
+  width: 54px;
+  font-size: 12px;
+  color: #fff;
 }
+.toutu-item .tou-selected {
+  background-image: url(//s1.hdslb.com/bfs/static/jinkela/space/asserts/icons.png);
+  background-position: -642px -650px;
+  content: "";
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  top: -3px;
+  right: 0;
+}
+
 /*
 // .grid-content {
 //   border: 3px solid #555;

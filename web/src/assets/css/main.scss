@@ -56,7 +56,11 @@ a:focus {
 div {
     box-sizing: border-box;
 }
-
+.clear::after{
+    content: '';
+    display: block;
+    clear: both;
+}
 .banSelect {
     user-select: none;
 }
