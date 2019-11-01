@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 23:11:37
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-24 13:37:25
+ * @LastEditTime: 2019-11-01 09:36:16
  */
 /*
  * @Descripttion: 
@@ -24,6 +24,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);
+
+/* 粒子背景 */
+import VueParticles from 'vue-particles'
+Vue.use(VueParticles)
 
 new Vue({
   router,

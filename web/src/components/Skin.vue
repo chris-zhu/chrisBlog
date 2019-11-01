@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 09:49:22
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-31 17:02:54
+ * @LastEditTime: 2019-10-31 20:31:44
  -->
 /** 皮肤组件 */
 <template>
@@ -75,19 +75,12 @@ export default {
     testUse(i) {
       let topBg = this.bgList[i].l_img;
       getApi("/user/updateUserInfo", { topBg }).then(res => {
-        console.log(res);
+        this.closeSkin()
       });
     },
     loadAllTopBg() {
       getApi("/topbg/list", {}).then(res => {
-        // let bgs = res.data.data;
-        // let bgList = [];
-        // for (let i = 0; i < bgs.length; i += 3) {
-        //   bgList.push(bgs.slice(i, i + 3));
-        // }
-        // this.bgList = bgList;
         this.bgList = res.data.data;
-        console.log(this.bgList);
       });
     }
   },

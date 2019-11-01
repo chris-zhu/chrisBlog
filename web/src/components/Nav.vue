@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-03 23:29:57
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-31 14:02:43
+ * @LastEditTime: 2019-10-31 20:33:42
  -->
 
 <template>
@@ -127,6 +127,7 @@ import { postApi, getApi } from "../utils/request";
 import { getToken, removeToken } from "../utils/auth";
 import { mapState } from "vuex";
 export default {
+  name:'Nav',
   data() {
     return {
       activeIndex: "1",
