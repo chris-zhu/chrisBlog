@@ -4,11 +4,11 @@
  * @Author: sueRimn
  * @Date: 2019-10-21 16:56:39
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-05 10:51:52
+ * @LastEditTime: 2019-11-05 11:10:19
  -->
 <template>
   <div id="app">
-    <!-- <vue-scroll :ops="ops"> -->
+    <vue-scroll :ops="ops" @handle-scroll="handleScroll">
       <vue-particles
         color="#fff"
         :particleOpacity="0.7"
@@ -36,7 +36,7 @@
         </el-main>
         <el-footer class="content">Footer</el-footer>
       </el-container>
-    <!-- </vue-scroll> -->
+    </vue-scroll>
   </div>
 </template>
 <script>
@@ -48,33 +48,35 @@ export default {
   data() {
     return {
       nav_opacity: false,
-      // ops: {
-      //   vuescroll: {},
-      //   scrollPanel: {},
-      //   rail: {
-      //     keepShow: true
-      //   },
-      //   bar: {
-      //     hoverStyle: true,
-      //     onlyShowBarOnScroll: false, //是否只有滚动的时候才显示滚动条
-      //     background: "red"
-      //   }
-      // }
+      ops: {
+        vuescroll: {},
+        scrollPanel: {},
+        rail: {
+          keepShow: true
+        },
+        bar: {
+          hoverStyle: true,
+          onlyShowBarOnScroll: true, //是否只有滚动的时候才显示滚动条
+          background: "#e6a23c",
+          size: "6px",
+          minSize: 0.3,
+          opacity: 1
+        }
+      }
     };
   },
   methods: {
-    scroll() {
-      let scroll =
-        document.documentElement.scrollTop || document.body.scrollTop;
-      this.nav_opacity = scroll != 0;
+    handleScroll(vertical, horizontal, nativeEvent) {
+      this.nav_opacity = vertical.scrollTop != 0;
     }
   },
-  mounted() {
-    window.addEventListener("scroll", this.scroll);
-  }
+  mounted() {}
 };
 </script>
 <style scoped>
+#app {
+  height: 100vh;
+}
 .content {
   width: 1160px;
   margin: 0 auto;
