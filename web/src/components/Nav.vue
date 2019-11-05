@@ -4,11 +4,11 @@
  * @Author: sueRimn
  * @Date: 2019-10-03 23:29:57
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-31 20:33:42
+ * @LastEditTime: 2019-11-01 12:32:15
  -->
 
 <template>
-  <div class="nav banSelect">
+  <div class="nav banSelect" :style="{background:opacity?'rgba(255,255,255,1)':'rgba(255,255,255,0.5)'}">
     <div class="nav-container">
       <div class="left">
         <a class="logo">
@@ -127,20 +127,27 @@ import { postApi, getApi } from "../utils/request";
 import { getToken, removeToken } from "../utils/auth";
 import { mapState } from "vuex";
 export default {
-  name:'Nav',
+  name: "Nav",
+  props: {
+    opacity: {
+      type: Boolean
+    }
+  },
   data() {
     return {
       activeIndex: "1",
       searchVal: "", //搜索框的值
-      isShowLogin: false,
+      isShowLogin: false, // 是否显示登录框
       form: {
         account: "",
         password: ""
       },
-      visible: false
+      visible: false,
+      isScroll: false
     };
   },
   watch: {
+    /** 是否显示登录框 */
     isShowLogin(newvalue) {
       if (!newvalue) {
         this.form = {
@@ -209,8 +216,9 @@ export default {
   top: 0;
   z-index: 10;
   width: 100%;
-  background: rgba(255, 255, 255, 0.5);
+  /* background: rgba(255, 255, 255, 0.5); */
   height: 50px;
+  transition: .35s all ease-in-out
 }
 .nav .nav-container {
   width: 1160px;

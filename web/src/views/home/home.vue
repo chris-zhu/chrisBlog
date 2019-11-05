@@ -4,11 +4,16 @@
  * @Author: sueRimn
  * @Date: 2019-10-21 17:29:56
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-31 16:55:25
+ * @LastEditTime: 2019-11-05 10:03:39
  -->
 <template>
   <div>
-    <div v-show="token" class="header" :style="'background-image:url(' + userInfo.topBg + ');'">
+    <!-- 头部个人信息 -->
+    <div
+      v-show="token"
+      class="header banSelect"
+      :style="'background-image:url(' + userInfo.topBg + ');'"
+    >
       <div class="user">
         <el-popover placement="top-start" width="100" trigger="hover" content="这个人很帅·~~">
           <div slot="reference" class="h-avatar">
@@ -26,6 +31,29 @@
       </div>
       <div @click="isShowSkin = true" title="更换皮肤" class="space-theme-trigger"></div>
     </div>
+    <!-- 内容区域 -->
+    <div class="content">
+      <el-row :gutter="20">
+        <!-- 最热文章 -->
+        <el-col :span="17">
+          <section class="banSelect hotArcticle">
+            <i class="iconfont iconhot"></i> 最热文章
+          </section>
+          <div class="articleList">
+            <Article v-for="i in 6" :key="i" />
+          </div>
+        </el-col>
+        <!-- 个人简介 -->
+        <el-col :span="7">
+          <section class="my-web">
+            <h3 class="banSelect web-desc">本站简介</h3>
+            <section class="web-info">本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介</section>
+          </section>
+        </el-col>
+      </el-row>
+    </div>
+
+    <!-- 换肤 -->
     <div class="skin_content" :style="{'bottom':isShowSkin?'0px':'-580px'}">
       <Skin @close="closeSkin" @changeBg="userInfo.topBg = $event"></Skin>
     </div>
@@ -33,12 +61,17 @@
 </template>
 
 <script>
-import Skin from "../../components/Skin";
+import Skin from "@/components/Skin";
+import Article from "@/components/Article";
 import { mapState } from "vuex";
-import { postApi, getApi } from "../../utils/request";
-import { getToken, removeToken } from "../../utils/auth";
+import { postApi, getApi } from "@/utils/request";
+import { getToken, removeToken } from "@/utils/auth";
 export default {
   name: "home",
+  components: {
+    Skin,
+    Article
+  },
   data() {
     return {
       userface: "../../assets/images/preview.gif",
@@ -66,10 +99,7 @@ export default {
     ...mapState("user", ["token", "userInfo"])
   },
   created() {},
-  mounted() {},
-  components: {
-    Skin
-  }
+  mounted() {}
 };
 </script>
 <style scoped>
@@ -175,5 +205,91 @@ export default {
   position: fixed;
   left: 0;
   transition: 0.4s all ease-in-out;
+}
+
+/* 内容区域 */
+.content {
+  overflow: hidden;
+  margin: 10px 0;
+}
+.articleList {
+  width: 100%;
+  border-radius: 4px;
+}
+/* .grid-content {
+  height: 50px;
+  background: #fee0e0;
+} */
+.my-web {
+  width: 100%;
+  border-radius: 4px;
+  background-color: #f0f9eb;
+  color: #67c23a;
+}
+.my-web .web-desc {
+  position: relative;
+  font-weight: 400;
+  padding: 8px 16px;
+  font-size: 16px;
+  /* color: #e6a23c; */
+  border-bottom: 1px solid;
+}
+.web-desc::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #97d6fd;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 90px;
+  animation: 6s runBefore infinite;
+}
+.web-desc::after {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #92bdfe;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  animation: 6s runAfter infinite;
+}
+@keyframes runBefore {
+  0% {
+    left: 90px;
+  }
+  50% {
+    left: 294px;
+  }
+  100% {
+    left: 90px;
+  }
+}
+@keyframes runAfter {
+  0% {
+    right: 10px;
+  }
+  50% {
+    right: 214px;
+  }
+  100% {
+    right: 10px;
+  }
+}
+.my-web .web-info {
+  padding: 5px 10px;
+  font-size: 14px;
+  /* color: #e6a23c; */
+}
+.hotArcticle {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #fdf6ec;
+  color: #e6a23c;
+  margin-bottom: 10px;
 }
 </style>

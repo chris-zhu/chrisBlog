@@ -4,11 +4,12 @@
  * @Author: sueRimn
  * @Date: 2019-10-21 16:56:39
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-01 09:47:23
+ * @LastEditTime: 2019-11-05 10:51:52
  -->
 <template>
   <div id="app">
-    <vue-particles
+    <!-- <vue-scroll :ops="ops"> -->
+      <vue-particles
         color="#fff"
         :particleOpacity="0.7"
         :particlesNumber="60"
@@ -25,17 +26,17 @@
         :clickEffect="true"
         clickMode="push"
         class="lizi particles"
-      >
-      </vue-particles>
-    <el-container>
-      <el-header height="50px">
-        <Nav />
-      </el-header>
-      <el-main class="content">
-        <router-view />
-      </el-main>
-      <el-footer class="content">Footer</el-footer>
-    </el-container>
+      ></vue-particles>
+      <el-container class="z2">
+        <el-header height="50px">
+          <Nav :opacity="nav_opacity" />
+        </el-header>
+        <el-main class="content">
+          <router-view />
+        </el-main>
+        <el-footer class="content">Footer</el-footer>
+      </el-container>
+    <!-- </vue-scroll> -->
   </div>
 </template>
 <script>
@@ -45,9 +46,32 @@ export default {
     Nav
   },
   data() {
-    return {};
+    return {
+      nav_opacity: false,
+      // ops: {
+      //   vuescroll: {},
+      //   scrollPanel: {},
+      //   rail: {
+      //     keepShow: true
+      //   },
+      //   bar: {
+      //     hoverStyle: true,
+      //     onlyShowBarOnScroll: false, //是否只有滚动的时候才显示滚动条
+      //     background: "red"
+      //   }
+      // }
+    };
   },
-  methods: {}
+  methods: {
+    scroll() {
+      let scroll =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      this.nav_opacity = scroll != 0;
+    }
+  },
+  mounted() {
+    window.addEventListener("scroll", this.scroll);
+  }
 };
 </script>
 <style scoped>
@@ -56,11 +80,14 @@ export default {
   margin: 0 auto;
   padding: 0 !important;
 }
-.particles{
+.particles {
   position: fixed;
   width: 100vw;
   height: 100vh;
   top: 0;
   left: 0;
+}
+.z2 {
+  z-index: 2;
 }
 </style>

@@ -1,0 +1,161 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: sueRimn
+ * @Date: 2019-11-01 11:29:59
+ * @LastEditors: sueRimn
+ * @LastEditTime: 2019-11-05 10:04:24
+ -->
+<template>
+  <div>
+    <el-card class="box-card">
+      <div class="article">
+        <div class="imgBox">
+          <img class="banSelect art-img" :src="article.img" alt />
+        </div>
+        <div class="content">
+          <h3>
+            <el-link class="title" type="info">这是标题这是标题这是标题这是标题</el-link>
+          </h3>
+          <div class="tags">
+            <el-tag class="tag" size="small">标签一</el-tag>
+            <el-tag class="tag" size="small" type="success">标签二</el-tag>
+            <el-tag size="small" class="tag" type="info">标签三</el-tag>
+            <el-tag size="small" class="tag" type="warning">标签四</el-tag>
+            <el-tag size="small" class="tag" type="danger">标签五</el-tag>
+          </div>
+          <section class="desc">
+            <span
+              class="desc-span"
+            >这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述</span>
+          </section>
+          <section class="tools">
+            <section class="toolList">
+              <section class="tool">
+                <i style="color:#409EFF;" class="iconfont iconsend-clock"></i>
+                <span class="txt">2018-5-5 12:21</span>
+              </section>
+              <section class="tool">
+                <i style="color:#E6A23C;font-size:18px;" class="iconfont iconliulanliang"></i>
+                <span class="txt">454545</span>
+              </section>
+              <section class="tool">
+                <i style="color: #F56C6C;" class="iconfont iconhua"></i>
+                <span class="txt">1231</span>
+              </section>
+              <section class="tool">
+                <i class="iconfont iconliuyan1"></i>
+                <span class="txt">12312</span>
+              </section>
+            </section>
+            <el-link title="去瞧点儿乐子吧~~" style="margin-right:15px;">
+              查看全文
+              <i class="el-icon-d-arrow-right"></i>
+            </el-link>
+          </section>
+        </div>
+      </div>
+    </el-card>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      article: {
+        img:
+          "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+      }
+    };
+  },
+  methods: {},
+  created() {},
+
+  mounted() {}
+};
+</script>
+<style scoped>
+.box-card {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.box-card:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+}
+.box-card:hover .imgBox .art-img {
+  transform: scale(1.3);
+}
+.article {
+  display: flex;
+  width: 100%;
+}
+.article .imgBox {
+  width: 300px;
+  height: 200px;
+  overflow: hidden;
+}
+.imgBox .art-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all ease-in-out 0.5s;
+}
+.article .content {
+  cursor: pointer;
+  position: relative;
+  flex: 1;
+  /* height: 100%; */
+  padding-left: 10px;
+}
+.content .title {
+  font-size: 20px;
+  line-height: 1.5;
+}
+.content .tags {
+  padding: 8px 0;
+}
+.tags .tag {
+  margin-right: 5px;
+}
+.content .desc {
+  width: 100%;
+  height: 103px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+}
+.desc .desc-span {
+  font-size: 14px;
+  color: #5e6d82;
+  line-height: 1.5em;
+}
+.tools {
+  width: 100%;
+  height: 20px;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tools .toolList {
+  display: flex;
+  align-items: center;
+}
+.toolList .tool {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.tool .iconfont {
+  font-size: 16px;
+  margin-right: 4px;
+}
+.tool .txt {
+  font-size: 14px;
+  color: #606266;
+}
+</style>

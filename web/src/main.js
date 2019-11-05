@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 23:11:37
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-01 09:36:16
+ * @LastEditTime: 2019-11-05 09:48:18
  */
 /*
  * @Descripttion: 
@@ -24,6 +24,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);
+
+/* 滚动条 */
+import vuescroll from 'vuescroll'
+Vue.use(vuescroll)
 
 /* 粒子背景 */
 import VueParticles from 'vue-particles'

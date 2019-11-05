@@ -46,13 +46,6 @@ a {
     color: #606266;
 }
 
-a:hover,
-a:active,
-a:focus {
-    // color: #c00;
-    text-decoration: underline;
-}
-
 div {
     box-sizing: border-box;
 }
@@ -106,4 +99,9 @@ div {
 
 .el-menu--horizontal>.el-submenu .el-submenu__title:hover {
     background-color: #ecf5ff !important;
+}
+
+.el-card__body {
+    padding: 10px !important;
+    font-size: 0 !important;
 }
