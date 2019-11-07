@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { getApi } from "../utils/request";
+import { getApi } from "@/utils/request";
 export default {
   name: "Skin",
   data() {

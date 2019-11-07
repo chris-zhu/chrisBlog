@@ -4,11 +4,11 @@
  * @Author: sueRimn
  * @Date: 2019-10-23 12:19:21
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-30 20:38:46
+ * @LastEditTime: 2019-11-06 14:04:41
  */
 import axios from 'axios';
 import qs from 'qs';
-import store from '../store'
+import store from '@/store'
 import {
     getToken,
     removeToken

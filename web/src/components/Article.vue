@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-11-01 11:29:59
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-05 10:04:24
+ * @LastEditTime: 2019-11-06 15:14:44
  -->
 <template>
   <div>
@@ -17,7 +17,7 @@
           <h3>
             <el-link class="title" type="info">这是标题这是标题这是标题这是标题</el-link>
           </h3>
-          <div class="tags">
+          <div class="tags banSelect">
             <el-tag class="tag" size="small">标签一</el-tag>
             <el-tag class="tag" size="small" type="success">标签二</el-tag>
             <el-tag size="small" class="tag" type="info">标签三</el-tag>
@@ -102,7 +102,7 @@ export default {
   transition: all ease-in-out 0.5s;
 }
 .article .content {
-  cursor: pointer;
+  /* cursor: pointer; */
   position: relative;
   flex: 1;
   /* height: 100%; */

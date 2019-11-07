@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-21 16:56:39
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-01 09:12:49
+ * @LastEditTime: 2019-11-06 14:06:49
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -15,6 +15,10 @@ const routes = [{
   path: '/',
   name: 'home',
   component: () => import('@/views/home/home')
+}, {
+  path: '/release',
+  name: 'release',
+  component: () => import('@/views/release')
 }]
 
 const router = new VueRouter({

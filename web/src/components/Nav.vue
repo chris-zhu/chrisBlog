@@ -8,7 +8,10 @@
  -->
 
 <template>
-  <div class="nav banSelect" :style="{background:opacity?'rgba(255,255,255,1)':'rgba(255,255,255,0.5)'}">
+  <div
+    class="nav banSelect"
+    :style="{background:opacity?'rgba(255,255,255,1)':'rgba(255,255,255,0.5)'}"
+  >
     <div class="nav-container">
       <div class="left">
         <a class="logo">
@@ -123,8 +126,8 @@
   </div>
 </template>
 <script>
-import { postApi, getApi } from "../utils/request";
-import { getToken, removeToken } from "../utils/auth";
+import { postApi, getApi } from "@/utils/request";
+import { getToken, removeToken } from "@/utils/auth";
 import { mapState } from "vuex";
 export default {
   name: "Nav",
@@ -218,7 +221,7 @@ export default {
   width: 100%;
   /* background: rgba(255, 255, 255, 0.5); */
   height: 50px;
-  transition: .35s all ease-in-out
+  transition: 0.35s all ease-in-out;
 }
 .nav .nav-container {
   width: 1160px;
