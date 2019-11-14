@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-23 09:42:51
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-14 10:39:21
+ * @LastEditTime: 2019-11-14 17:48:36
  */
 let mongoose = require('mongoose')
 let Schema = mongoose.Schema
@@ -113,4 +113,14 @@ module.exports = {
     let findResult = await model.findById(articleId).populate('author', 'avatar name')
     return ctx.body = result.defaultResult('success', findResult)
   },
+  async viewsUp(ctx) {
+    let {
+      articleId
+    } = ctx.query
+    let one = await model.findById(articleId)
+    if (!one) return ctx.body = result.errorResult('无效的_id')
+    one.views++
+    let res = await one.save()
+    return ctx.body = result.defaultResult('success', res)
+  }
 }

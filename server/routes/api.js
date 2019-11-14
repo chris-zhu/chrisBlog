@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 21:32:46
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-13 16:51:21
+ * @LastEditTime: 2019-11-14 17:49:12
  */
 const Router = require('koa-router')
 const router = new Router()
@@ -22,6 +22,7 @@ let articleCtrl = require('../controller/article/article')
 router.get('/article/list', articleCtrl.list)
 router.post('/article/create', articleCtrl.create)
 router.get('/article/detail', articleCtrl.detail)
+router.get('/article/viewsUp', articleCtrl.viewsUp)
 
 router.get('/', async (ctx) => {
   ctx.body = {

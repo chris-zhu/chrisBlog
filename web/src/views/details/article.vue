@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-11-13 15:35:43
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-13 17:45:20
+ * @LastEditTime: 2019-11-14 17:53:50
  -->
 <template>
   <div>
@@ -12,7 +12,7 @@
       <el-row :gutter="10">
         <el-col :span="18">
           <div class="page">
-            <header>
+            <header class="header">
               <h1 class="title">{{article.title}}</h1>
               <section class="infos" v-if="article.author">
                 <el-avatar :size="50" :src="article.author.avatar"></el-avatar>
@@ -31,7 +31,8 @@
                       <i style="color: #F56C6C;" class="iconfont i iconhua"></i>
                       <span class="txt">{{article.likes}}</span>
                     </section>
-                    <section class="btn">
+                    <!-- <el-link icon="el-icon-chat-dot-square">{{article.comments.length}}</el-link> -->
+                    <section class="btn" style="cursor:pointer;">
                       <i class="iconfont i iconliuyan1"></i>
                       <span class="txt">{{article.comments.length}}</span>
                     </section>
@@ -66,12 +67,36 @@ export default {
     };
   },
   methods: {
+    viewUp() {
+      getApi("/article/viewsUp", {
+        articleId: this.articleId
+      }).then(res => {
+        this.article = res.data;
+        if (this.article) this.article.content = marked(this.article.content);
+      });
+    },
     loadDetailArticle() {
       getApi("/article/detail", {
         articleId: this.articleId
       }).then(res => {
         this.article = res.data;
-        if(this.article) this.article.content = marked(this.article.content)
+        if (this.article) this.article.content = marked(this.article.content);
+      });
+    },
+    init() {
+      marked.setOptions({
+        renderer: new marked.Renderer(),
+        highlight: function(code) {
+          return hljs.highlightAuto(code).value;
+        },
+        pedantic: false,
+        gfm: true,
+        tables: true,
+        breaks: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: false,
+        xhtml: false
       });
     }
   },
@@ -80,11 +105,17 @@ export default {
   },
 
   mounted() {
-    this.loadDetailArticle();
+    this.viewUp();
+    this.init();
+    // this.loadDetailArticle();
   }
 };
 </script>
 <style scoped>
+.header {
+  padding-bottom: 20px;
+  border-bottom: 1px dotted #eaecef;
+}
 .contents {
   overflow: hidden;
   margin-top: 10px;
@@ -95,6 +126,7 @@ export default {
   background-color: bisque;
 }
 .page {
+  border-radius: 5px;
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
@@ -111,7 +143,6 @@ export default {
 }
 .infos {
   display: flex;
-  margin-bottom: 40px;
 }
 .userinfo {
   margin-left: 20px;
