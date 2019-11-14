@@ -4,16 +4,22 @@
  * @Author: sueRimn
  * @Date: 2019-11-06 14:05:27
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-06 20:55:15
+ * @LastEditTime: 2019-11-14 15:45:42
  -->
 <template>
   <div>
     <div class="release">
       <el-form ref="form" :rules="rules" :model="form" label-position="right" label-width="200px">
         <el-form-item label="标题" prop="title">
-          <el-input v-model="form.title" clearable placeholder="请输入文章标题" style="width: 400px;"></el-input>
+          <el-input
+            ref="titleInput"
+            v-model="form.title"
+            clearable
+            placeholder="请输入文章标题"
+            style="width: 400px;"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="描述" prop="desc">
+        <el-form-item label="描述">
           <el-input
             type="textarea"
             style="width: 400px;"
@@ -32,7 +38,7 @@
             :disable-transitions="false"
             @close="handleClose(tag)"
           >{{tag}}</el-tag>
-          <el-input
+          <!-- <el-input
             style="width: 100px;"
             class="input-new-tag"
             clearable
@@ -42,7 +48,20 @@
             size="small"
             @keyup.enter.native="handleInputConfirm"
             @blur="handleInputConfirm"
-          ></el-input>
+          ></el-input>-->
+
+          <el-autocomplete
+            style="width: 100px;"
+            class="input-new-tag"
+            v-model="newTagValue"
+            clearable
+            v-if="isTagInput"
+            ref="saveTagInput"
+            @select="selectTag"
+            :fetch-suggestions="querySearch"
+            @blur="blur"
+            @keyup.enter.native="handleInputConfirm"
+          ></el-autocomplete>
           <el-button v-else class="button-new-tag" size="small" @click="showTagInput">+ New Tag</el-button>
         </el-form-item>
         <el-form-item label="头图">
@@ -60,9 +79,17 @@
             <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
-        <el-form-item label="内容">
+        <el-form-item label="外链" prop="outlink">
+          <el-input v-model="form.outlink" clearable placeholder="请输入外链" style="width: 400px;"></el-input>
+        </el-form-item>
+        <!-- <el-form-item label="内容">
           <div style="width:800px">
             <Editor v-model="detail" :isClear="isClear" @change="editorChange"></Editor>
+          </div>
+        </el-form-item>-->
+        <el-form-item label="内容" prop="content">
+          <div style="width:900px">
+            <Mavoneditor @change="editorChange" />
           </div>
         </el-form-item>
         <el-form-item>
@@ -75,14 +102,23 @@
 </template>
 
 <script>
-import Editor from "@/components/utils/Editor";
+// import Editor from "@/components/utils/Editor";
+import Mavoneditor from "@/components/utils/Mavoneditor";
 import { getApi, postApi } from "@/utils/request";
 export default {
   name: "release",
   components: {
-    Editor
+    // Editor,
+    Mavoneditor
   },
   data() {
+    let checkOutlink = (rule, value, callback) => {
+      if (value) {
+        let result = rule.reg.test(value);
+        if (result) callback();
+        else callback(new Error("链接输入错误~~·_·~~"));
+      }
+    };
     return {
       isClear: false,
       detail: "",
@@ -93,15 +129,33 @@ export default {
         title: "",
         desc: "",
         tags: [],
-        content: ""
+        content: "",
+        cover: "",
+        outlink: ""
       },
       rules: {
         title: [
           { required: true, message: "请输入标题", trigger: "blur" },
           { min: 1, max: 24, message: "标题不超过24个字符", trigger: "blur" }
         ],
-        desc: [{ required: true, message: "请输入文章描述", trigger: "blur" }]
-      }
+        desc: [{ required: true, message: "请输入文章描述", trigger: "blur" }],
+        content: [{ required: true, message: "请输入文章内容" }],
+        outlink: [
+          {
+            reg: /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/|www\.)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/,
+            validator: checkOutlink,
+            trigger: "blur"
+          }
+        ]
+      },
+      tagsArr: [
+        { value: "ES6" },
+        { value: "VUE" },
+        { value: "Node" },
+        { value: "HTML" },
+        { value: "CSS" },
+        { value: "JS" }
+      ]
     };
   },
   methods: {
@@ -109,9 +163,22 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
+          // 验证通过
+          let params = { ...this.form };
+          postApi("/article/create", params).then(res => {
+            this.$message({
+              message: "发布成功···",
+              type: "success"
+            });
+            setTimeout(() => {
+              this.$router.replace("/");
+            }, 1000);
+          });
         } else {
-          console.log("error submit!!");
+          this.$message({
+            type: "error",
+            message: "是不是有什么填错了~ ~"
+          });
           return false;
         }
       });
@@ -138,6 +205,7 @@ export default {
             message: "标签已存在"
           });
           this.$refs.saveTagInput.$refs.input.focus();
+          return
         } else {
           this.form.tags.push(newTagValue);
           this.isTagInput = false;
@@ -154,11 +222,38 @@ export default {
       this.$nextTick(_ => {
         this.$refs.saveTagInput.$refs.input.focus();
       });
+    },
+    /** tag搜索 */
+    querySearch(queryString, cb) {
+      let tagsArr = this.tagsArr;
+      let results = queryString
+        ? tagsArr.filter(tag => {
+            return (
+              tag.value.toLowerCase().indexOf(queryString.toLowerCase()) !== -1
+            );
+          })
+        : tagsArr;
+      setTimeout(() => {
+        cb(results);
+      }, 1000 * Math.random());
+    },
+    /** tag 选择 */
+    selectTag(item) {
+      this.newTagValue = item.value;
+      this.handleInputConfirm();
+    },
+    blur() {
+      setTimeout(() => {
+        this.handleInputConfirm();
+      }, 300);
     }
   },
   created() {},
-
-  mounted() {}
+  mounted() {
+    this.$nextTick(() => {
+      this.$refs.titleInput.focus();
+    });
+  }
 };
 </script>
 <style scoped>

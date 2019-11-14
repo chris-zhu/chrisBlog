@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-03 23:29:57
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-01 12:32:15
+ * @LastEditTime: 2019-11-11 10:18:53
  -->
 
 <template>
@@ -217,7 +217,7 @@ export default {
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 10;
+  z-index: 2000;
   width: 100%;
   /* background: rgba(255, 255, 255, 0.5); */
   height: 50px;

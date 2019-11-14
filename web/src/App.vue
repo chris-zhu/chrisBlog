@@ -4,12 +4,12 @@
  * @Author: sueRimn
  * @Date: 2019-10-21 16:56:39
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-05 11:10:19
+ * @LastEditTime: 2019-11-14 11:45:27
  -->
 <template>
   <div id="app">
-    <vue-scroll :ops="ops" @handle-scroll="handleScroll">
-      <vue-particles
+    <vue-scroll ref="refScroller" :ops="ops" @handle-scroll="handleScroll">
+      <!-- <vue-particles
         color="#fff"
         :particleOpacity="0.7"
         :particlesNumber="60"
@@ -26,7 +26,7 @@
         :clickEffect="true"
         clickMode="push"
         class="lizi particles"
-      ></vue-particles>
+      ></vue-particles>-->
       <el-container class="z2">
         <el-header height="50px">
           <Nav :opacity="nav_opacity" />
@@ -34,20 +34,28 @@
         <el-main class="content">
           <router-view />
         </el-main>
-        <el-footer class="content">Footer</el-footer>
+        <el-footer class>Footer</el-footer>
       </el-container>
     </vue-scroll>
+    <Toolbar bottom="50px" right="50px">
+      <Backtop v-show="showBackTopBtn" @click="backTop" />
+    </Toolbar>
   </div>
 </template>
 <script>
 import Nav from "./components/Nav";
+import Toolbar from "./components/utils/Toolbar";
+import Backtop from "./components/utils/Backtop";
 export default {
   components: {
-    Nav
+    Nav,
+    Toolbar,
+    Backtop
   },
   data() {
     return {
       nav_opacity: false,
+      showBackTopBtn: false,
       ops: {
         vuescroll: {},
         scrollPanel: {},
@@ -67,7 +75,12 @@ export default {
   },
   methods: {
     handleScroll(vertical, horizontal, nativeEvent) {
-      this.nav_opacity = vertical.scrollTop != 0;
+      this.nav_opacity = vertical.scrollTop >= 100;
+      this.showBackTopBtn = vertical.scrollTop >= 200;
+    },
+    backTop() {
+      let scroller = this.$refs.refScroller; // scroller的ref
+      scroller.scrollTo({ y: 0 }, 500, "easeInOutQuad");
     }
   },
   mounted() {}
@@ -88,6 +101,7 @@ export default {
   height: 100vh;
   top: 0;
   left: 0;
+  z-index: -1;
 }
 .z2 {
   z-index: 2;

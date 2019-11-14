@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-21 17:29:56
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-05 10:03:39
+ * @LastEditTime: 2019-11-14 12:09:11
  -->
 <template>
   <div>
@@ -40,7 +40,7 @@
             <i class="iconfont iconhot"></i> 最热文章
           </section>
           <div class="articleList">
-            <Article v-for="i in 6" :key="i" />
+            <Article v-for="article in articleList" :key="article._id" :article="article" />
           </div>
         </el-col>
         <!-- 个人简介 -->
@@ -52,7 +52,12 @@
         </el-col>
       </el-row>
     </div>
-
+    <!-- 发布 -->
+    <Toolbar top="32%" right="9%">
+      <el-tooltip class="item" effect="dark" content="去发布文章吧~-~" placement="top">
+        <el-button @click="release" type="danger" icon="el-icon-s-promotion" circle></el-button>
+      </el-tooltip>
+    </Toolbar>
     <!-- 换肤 -->
     <div class="skin_content" :style="{'bottom':isShowSkin?'0px':'-580px'}">
       <Skin @close="closeSkin" @changeBg="userInfo.topBg = $event"></Skin>
@@ -63,6 +68,7 @@
 <script>
 import Skin from "@/components/Skin";
 import Article from "@/components/Article";
+import Toolbar from "@/components/utils/Toolbar";
 import { mapState } from "vuex";
 import { postApi, getApi } from "@/utils/request";
 import { getToken, removeToken } from "@/utils/auth";
@@ -70,16 +76,21 @@ export default {
   name: "home",
   components: {
     Skin,
-    Article
+    Article,
+    Toolbar
   },
   data() {
     return {
-      userface: "../../assets/images/preview.gif",
-      autograph: "console.log('人怂花朵')",
-      isShowSkin: false
+      // userface: "../../assets/images/preview.gif",
+      // autograph: "console.log('人怂花朵')",
+      isShowSkin: false,
+      articleList: []
     };
   },
   methods: {
+    release() {
+      this.$router.push("/release");
+    },
     closeSkin(flag) {
       this.isShowSkin = flag;
       this.getUserInfo();
@@ -93,13 +104,19 @@ export default {
     changeSkin() {
       this.showSkin = true;
     },
-    loadSkinList() {}
+    loadArticleList() {
+      getApi("/article/list", {}).then(res => {
+        this.articleList = res.data;
+      });
+    }
   },
   computed: {
     ...mapState("user", ["token", "userInfo"])
   },
   created() {},
-  mounted() {}
+  mounted() {
+    this.loadArticleList();
+  }
 };
 </script>
 <style scoped>

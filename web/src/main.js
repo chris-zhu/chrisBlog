@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 23:11:37
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-05 09:48:18
+ * @LastEditTime: 2019-11-14 09:39:58
  */
 /*
  * @Descripttion: 
@@ -21,6 +21,7 @@ import store from './store'
 import '../src/assets/css/main.scss'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import moment from "moment";
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);
@@ -32,6 +33,15 @@ Vue.use(vuescroll)
 /* 粒子背景 */
 import VueParticles from 'vue-particles'
 Vue.use(VueParticles)
+
+/** 富文本 */
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+Vue.use(mavonEditor)
+
+Vue.filter('dateformat', function (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
+  return moment(dataStr).format(pattern)
+})
 
 new Vue({
   router,

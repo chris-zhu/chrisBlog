@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 21:08:22
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-31 17:17:10
+ * @LastEditTime: 2019-11-13 16:59:44
  */
 const Koa = require('koa')
 // const mongoose = require('mongoose') //链接数据库
@@ -17,42 +17,43 @@ const Result = require('./utils/result')
 const app = new Koa()
 
 app.use(xmlParser({
-    limit: 1280,
-    encoding: 'utf8', // lib will detect it from `content-type`
-    xmlOptions: {
-        explicitArray: false
-    },
-    onerror: (err, ctx) => {
-        ctx.throw(err.status, err.message);
-    }
+  limit: 1280,
+  encoding: 'utf8', // lib will detect it from `content-type`
+  xmlOptions: {
+    explicitArray: false
+  },
+  onerror: (err, ctx) => {
+    ctx.throw(err.status, err.message);
+  }
 }))
 app.use(bodyParser())
 
 //设置跨域请求npm
 app.use(async (ctx, next) => {
-    ctx.set({
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-        'Access-Control-Allow-Methods': 'PUT, POST, GET, DELETE, OPTIONS'
-    });
-    await next();
+  ctx.set({
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+    'Access-Control-Allow-Methods': 'PUT, POST, GET, DELETE, OPTIONS'
+  });
+  await next();
 });
 
 //设置token验证
 const notVerifyRoutes = require('./utils/notVerify')
 app.use(async (ctx, next) => {
-    if (notVerifyRoutes.indexOf(ctx.request.url) < 0) {
-        let token = ctx.header.authorization
-        let res = JwtUtil.verifyToken(token);
-        if (res === 'error') {
-            return ctx.body = Result.errorResult('登录已过期,请重新登录', null)
-        } else {
-            ctx.query._id = res._id
-        }
+  let route = ctx.request.url.split('?')[0]
+  if (!notVerifyRoutes.includes(route)) {
+    let token = ctx.header.authorization
+    let res = JwtUtil.verifyToken(token);
+    if (res === 'error') return ctx.body = Result.errorResult('登录已过期,请重新登录', null)
+    else {
+      let method = ctx.method.toUpperCase()
+      if (method === 'POST') ctx.request.body._id = res._id
+      else if (method === 'GET') ctx.query._id = res._id
     }
-    await next();
+  }
+  await next();
 });
-
 
 //connect database
 const connectDb = require('./config/db')
@@ -66,9 +67,9 @@ app.use(router.routes()).use(router.allowedMethods());
 //设置端口监听
 const port = 5000;
 app.listen(port, (err) => {
-    if (!err) {
-        console.log(`server run ${port}`)
-    } else {
-        console.log(err)
-    }
+  if (!err) {
+    console.log(`server run ${port}`)
+  } else {
+    console.log(err)
+  }
 })

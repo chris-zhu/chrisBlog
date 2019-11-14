@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 21:32:46
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-29 20:35:49
+ * @LastEditTime: 2019-11-13 16:51:21
  */
 const Router = require('koa-router')
 const router = new Router()
@@ -18,29 +18,15 @@ router.get('/user/userInfo', userCtrl.userInfo)
 router.get('/user/updateUserInfo', userCtrl.updateUserInfo)
 // router.get('/user/createUser', userCtrl.createUser)
 
+let articleCtrl = require('../controller/article/article')
+router.get('/article/list', articleCtrl.list)
+router.post('/article/create', articleCtrl.create)
+router.get('/article/detail', articleCtrl.detail)
 
 router.get('/', async (ctx) => {
-    ctx.body = {
-        msg: 'hello koa'
-    }
-})
-router.post('/login', async (ctx) => {
-    let {
-        account,
-        password
-    } = ctx.request.body
-    ctx.body = {
-        msg: `post:--->账号是: ${account}  ,密码是: ${password}`,
-    }
-})
-router.get('/login', async (ctx) => {
-    let {
-        account,
-        password
-    } = ctx.query
-    ctx.body = {
-        msg: `get:--->账号是:${account},密码是:${password}`,
-    }
+  ctx.body = {
+    msg: 'hello koa'
+  }
 })
 
 module.exports = router
