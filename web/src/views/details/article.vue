@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-11-13 15:35:43
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-14 17:53:50
+ * @LastEditTime: 2019-11-15 21:54:28
  -->
 <template>
   <div>
@@ -58,7 +58,7 @@ import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 // import "highlight.js/styles/github.css";
 import "@/assets/css/markdown.scss";
-import "highlight.js/styles/vs2015.css";
+import "highlight.js/styles/atom-one-dark.css";
 export default {
   data() {
     return {
@@ -68,11 +68,8 @@ export default {
   },
   methods: {
     viewUp() {
-      getApi("/article/viewsUp", {
+      return getApi("/article/viewsUpdate", {
         articleId: this.articleId
-      }).then(res => {
-        this.article = res.data;
-        if (this.article) this.article.content = marked(this.article.content);
       });
     },
     loadDetailArticle() {
@@ -104,10 +101,10 @@ export default {
     this.articleId = this.$route.params._id;
   },
 
-  mounted() {
-    this.viewUp();
+  async mounted() {
+    await this.viewUp();
     this.init();
-    // this.loadDetailArticle();
+    this.loadDetailArticle();
   }
 };
 </script>

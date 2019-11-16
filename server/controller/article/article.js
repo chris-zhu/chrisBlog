@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-23 09:42:51
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-14 17:48:36
+ * @LastEditTime: 2019-11-15 11:33:51
  */
 let mongoose = require('mongoose')
 let Schema = mongoose.Schema
@@ -39,10 +39,10 @@ let schema = new Schema({
     type: Number,
     default: 0
   },
-  comments: [{
-    type: Schema.Types.ObjectId,
+  comments: {
+    type: [Schema.Types.ObjectId],
     ref: 'comment'
-  }],
+  },
   tags: {
     type: Array,
     default: []
@@ -113,14 +113,11 @@ module.exports = {
     let findResult = await model.findById(articleId).populate('author', 'avatar name')
     return ctx.body = result.defaultResult('success', findResult)
   },
-  async viewsUp(ctx) {
+  async viewsUpdate(ctx) {
     let {
       articleId
     } = ctx.query
-    let one = await model.findById(articleId)
-    if (!one) return ctx.body = result.errorResult('无效的_id')
-    one.views++
-    let res = await one.save()
-    return ctx.body = result.defaultResult('success', res)
+    await model.update({ _id: articleId }, { $inc: { views: 1 }})
+    return ctx.body = result.defaultResult('success')
   }
 }

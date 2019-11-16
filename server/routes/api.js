@@ -22,7 +22,7 @@ let articleCtrl = require('../controller/article/article')
 router.get('/article/list', articleCtrl.list)
 router.post('/article/create', articleCtrl.create)
 router.get('/article/detail', articleCtrl.detail)
-router.get('/article/viewsUp', articleCtrl.viewsUp)
+router.get('/article/viewsUpdate', articleCtrl.viewsUpdate)
 
 router.get('/', async (ctx) => {
   ctx.body = {

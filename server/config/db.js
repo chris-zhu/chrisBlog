@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-10-22 21:40:32
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-10-23 09:40:53
+ * @LastEditTime: 2019-11-15 10:10:38
  */
 
 const mongoose = require('mongoose')
@@ -30,7 +30,6 @@ function connecteDb() {
     }).catch(err => {
         console.log(err)
     })
-
 }
 
 module.exports = connecteDb
