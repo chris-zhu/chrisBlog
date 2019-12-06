@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2019-11-13 15:35:43
  * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-15 21:54:28
+ * @LastEditTime: 2019-11-22 14:10:32
  -->
 <template>
   <div>
@@ -57,7 +57,7 @@ import marked from "marked";
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 // import "highlight.js/styles/github.css";
-import "@/assets/css/markdown.scss";
+// import "@/assets/css/markdown.scss";
 import "highlight.js/styles/atom-one-dark.css";
 export default {
   data() {
@@ -109,6 +109,8 @@ export default {
 };
 </script>
 <style scoped>
+@import "../../assets/css/markdown.scss";
+
 .header {
   padding-bottom: 20px;
   border-bottom: 1px dotted #eaecef;
