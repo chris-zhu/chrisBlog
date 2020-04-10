@@ -3,8 +3,8 @@
  * @version: 
  * @Author: sueRimn
  * @Date: 2019-11-13 15:35:43
- * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-22 14:10:32
+ * @LastEditors  : sueRimn
+ * @LastEditTime : 2020-01-19 17:21:31
  -->
 <template>
   <div>
@@ -59,6 +59,7 @@ import javascript from "highlight.js/lib/languages/javascript";
 // import "highlight.js/styles/github.css";
 // import "@/assets/css/markdown.scss";
 import "highlight.js/styles/atom-one-dark.css";
+
 export default {
   data() {
     return {
@@ -108,9 +109,10 @@ export default {
   }
 };
 </script>
-<style scoped>
-@import "../../assets/css/markdown.scss";
 
+<style scoped src="../../assets/css/markdown.scss"></style>
+
+<style scoped>
 .header {
   padding-bottom: 20px;
   border-bottom: 1px dotted #eaecef;

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: sueRimn
  * @Date: 2019-10-22 21:32:46
- * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-14 17:49:12
+ * @LastEditors  : sueRimn
+ * @LastEditTime : 2019-12-26 15:25:58
  */
 const Router = require('koa-router')
 const router = new Router()
@@ -21,6 +21,7 @@ router.get('/user/updateUserInfo', userCtrl.updateUserInfo)
 let articleCtrl = require('../controller/article/article')
 router.get('/article/list', articleCtrl.list)
 router.post('/article/create', articleCtrl.create)
+router.post('/article/update', articleCtrl.update)
 router.get('/article/detail', articleCtrl.detail)
 router.get('/article/viewsUpdate', articleCtrl.viewsUpdate)
 

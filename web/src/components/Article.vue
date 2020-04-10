@@ -3,8 +3,8 @@
  * @version: 
  * @Author: sueRimn
  * @Date: 2019-11-01 11:29:59
- * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-13 15:55:42
+ * @LastEditors  : sueRimn
+ * @LastEditTime : 2019-12-26 14:45:50
  -->
 <template>
   <div>
@@ -47,6 +47,11 @@
                 <i class="iconfont iconliuyan1"></i>
                 <span class="txt">{{article.comments.length}}</span>
               </section>
+              <section v-if="token" class="tool">
+                <!-- <i class="iconfont iconliuyan"></i>
+                <span class="txt">编辑</span>-->
+                <el-link @click="edit(article._id)" icon="el-icon-edit">编辑</el-link>
+              </section>
             </section>
             <el-link @click="goToDetail" title="去瞧点儿乐子吧~~" style="margin-right:15px;">
               查看全文
@@ -60,6 +65,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   props: {
     article: {
@@ -71,9 +77,16 @@ export default {
       tagTypes: ["", "success", "info", "warning", "danger"]
     };
   },
+  computed: {
+    ...mapState("user", ["token"])
+  },
   methods: {
     goToDetail() {
       this.$router.push("/details/" + this.article._id);
+    },
+    edit(articleId) {
+      console.log(articleId);
+      this.$router.push(`/release/${articleId}`);
     }
   },
   created() {},

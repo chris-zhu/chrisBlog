@@ -3,8 +3,8 @@
  * @version: 
  * @Author: sueRimn
  * @Date: 2019-11-06 14:05:27
- * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-14 15:45:42
+ * @LastEditors  : sueRimn
+ * @LastEditTime : 2019-12-26 14:57:44
  -->
 <template>
   <div>
@@ -89,7 +89,7 @@
         </el-form-item>-->
         <el-form-item label="内容" prop="content">
           <div style="width:900px">
-            <Mavoneditor @change="editorChange" />
+            <Mavoneditor :content="form.content" @change="editorChange" />
           </div>
         </el-form-item>
         <el-form-item>
@@ -120,6 +120,7 @@ export default {
       }
     };
     return {
+      articleId: "",
       isClear: false,
       detail: "",
       isTagInput: false,
@@ -165,9 +166,11 @@ export default {
         if (valid) {
           // 验证通过
           let params = { ...this.form };
-          postApi("/article/create", params).then(res => {
+          if (this.articleId) params.articleId = this.articleId;
+          let url = this.articleId ? "/article/update" : "/article/create";
+          postApi(url, params).then(res => {
             this.$message({
-              message: "发布成功···",
+              message: this.articleId ? "修改成功" : "发布成功···",
               type: "success"
             });
             setTimeout(() => {
@@ -205,7 +208,7 @@ export default {
             message: "标签已存在"
           });
           this.$refs.saveTagInput.$refs.input.focus();
-          return
+          return;
         } else {
           this.form.tags.push(newTagValue);
           this.isTagInput = false;
@@ -246,9 +249,27 @@ export default {
       setTimeout(() => {
         this.handleInputConfirm();
       }, 300);
+    },
+    loadDetail() {
+      getApi("/article/detail", {
+        articleId: this.articleId
+      }).then(res => {
+        console.log(res.data);
+        this.form = {
+          title: res.data.title,
+          desc: res.data.desc,
+          tags: res.data.tags,
+          content: res.data.content,
+          cover: res.data.cover,
+          outlink: res.data.outlink
+        };
+      });
     }
   },
-  created() {},
+  created() {
+    this.articleId = this.$route.params.articleId || "";
+    if (this.articleId) this.loadDetail();
+  },
   mounted() {
     this.$nextTick(() => {
       this.$refs.titleInput.focus();

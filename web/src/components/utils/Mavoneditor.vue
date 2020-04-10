@@ -14,10 +14,9 @@
 
 <script>
 export default {
+  props: ["content"],
   data() {
-    return {
-      content: ""
-    };
+    return {};
   },
   methods: {
     editorChange() {

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: sueRimn
  * @Date: 2019-10-03 23:29:57
- * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-11 10:18:53
+ * @LastEditors  : sueRimn
+ * @LastEditTime : 2019-12-26 14:21:40
  -->
 
 <template>
@@ -27,42 +27,43 @@
           class="el-menu-list"
           mode="horizontal"
           @select="handleSelect"
+          router
         >
-          <el-menu-item index="1">
+          <el-menu-item index="/">
             <i style="color:#00c091" class="iconfont iconshouye icon"></i>
             <span>首页</span>
           </el-menu-item>
-          <el-submenu class="el-submenus" index="2">
+          <el-submenu class="el-submenus" index="/">
             <template slot="title">
               <i style="color:#02b5da" class="iconfont iconbiji icon"></i>
               <span>个人笔记</span>
             </template>
-            <el-menu-item index="2-0">All</el-menu-item>
-            <el-menu-item index="2-1">HTML5</el-menu-item>
-            <el-menu-item index="2-2">CSS3</el-menu-item>
-            <el-menu-item index="2-3">JS</el-menu-item>
-            <el-submenu index="2-4">
+            <el-menu-item index="/">All</el-menu-item>
+            <el-menu-item index="/">HTML5</el-menu-item>
+            <el-menu-item index="/">CSS3</el-menu-item>
+            <el-menu-item index="/">JS</el-menu-item>
+            <el-submenu index="/">
               <template slot="title">ES6</template>
-              <el-menu-item index="2-4-1">选项1</el-menu-item>
-              <el-menu-item index="2-4-2">选项2</el-menu-item>
-              <el-menu-item index="2-4-3">选项3</el-menu-item>
+              <el-menu-item index="/">选项1</el-menu-item>
+              <el-menu-item index="/">选项2</el-menu-item>
+              <el-menu-item index="/">选项3</el-menu-item>
             </el-submenu>
-            <el-submenu index="2-5">
+            <el-submenu index="/">
               <template slot="title">VUE</template>
-              <el-menu-item index="2-5-1">选项1</el-menu-item>
-              <el-menu-item index="2-5-2">选项2</el-menu-item>
-              <el-menu-item index="2-3-3">选项3</el-menu-item>
+              <el-menu-item index="/">选项1</el-menu-item>
+              <el-menu-item index="/">选项2</el-menu-item>
+              <el-menu-item index="/">选项3</el-menu-item>
             </el-submenu>
           </el-submenu>
-          <el-menu-item index="3">
+          <el-menu-item index="/">
             <i style="color:#eee0e5" class="iconfont iconzuopin icon"></i>
             <span>作品</span>
           </el-menu-item>
-          <el-menu-item index="4">
+          <el-menu-item index="/">
             <i style="color:#9bcd9e" class="iconfont iconguanyu icon"></i>
             <span>关于</span>
           </el-menu-item>
-          <el-menu-item index="5">
+          <el-menu-item index="/">
             <i style="color:#23c9ed" class="iconfont iconliuyan icon"></i>
             <span>留言</span>
           </el-menu-item>
@@ -167,7 +168,9 @@ export default {
     serach() {
       // this.getUserInfo();
     },
-    handleSelect() {},
+    handleSelect(e,path) {
+      console.log(e,path);
+    },
     showLogin() {
       this.isShowLogin = true;
     },

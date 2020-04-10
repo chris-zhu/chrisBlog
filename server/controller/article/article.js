@@ -3,8 +3,8 @@
  * @version: 
  * @Author: sueRimn
  * @Date: 2019-10-23 09:42:51
- * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-15 11:33:51
+ * @LastEditors  : sueRimn
+ * @LastEditTime : 2019-12-26 15:08:35
  */
 let mongoose = require('mongoose')
 let Schema = mongoose.Schema
@@ -103,6 +103,28 @@ module.exports = {
     let createResult = await model.create(one)
     return ctx.body = result.defaultResult('success', createResult)
   },
+  async update(ctx) {
+    let {
+      _id,
+      articleId,
+      title,
+      desc,
+      cover,
+      content,
+      outlink,
+      tags
+    } = ctx.request.body
+    let one = model.findById(articleId)
+    if (!one) return ctx.body = result.errorResult('无效的帖子')
+    if (cover) one.cover = cover
+    one.title = title
+    one.desc = desc
+    one.content = content
+    one.outlink = outlink
+    one.tags = tags
+    let res = await one.save()
+    return ctx.body = result.defaultResult('success', res)
+  },
   async detail(ctx) {
     let {
       articleId
@@ -117,7 +139,13 @@ module.exports = {
     let {
       articleId
     } = ctx.query
-    await model.update({ _id: articleId }, { $inc: { views: 1 }})
+    await model.update({
+      _id: articleId
+    }, {
+      $inc: {
+        views: 1
+      }
+    })
     return ctx.body = result.defaultResult('success')
   }
 }

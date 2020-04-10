@@ -3,8 +3,8 @@
  * @version: 
  * @Author: sueRimn
  * @Date: 2019-10-21 16:56:39
- * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-14 11:45:27
+ * @LastEditors  : sueRimn
+ * @LastEditTime : 2019-12-26 14:01:49
  -->
 <template>
   <div id="app">
@@ -34,7 +34,7 @@
         <el-main class="content">
           <router-view />
         </el-main>
-        <el-footer class>Footer</el-footer>
+        <el-footer class="footer">这是我的页脚，暂未设定内容</el-footer>
       </el-container>
     </vue-scroll>
     <Toolbar bottom="50px" right="50px">
@@ -43,9 +43,9 @@
   </div>
 </template>
 <script>
-import Nav from "./components/Nav";
-import Toolbar from "./components/utils/Toolbar";
-import Backtop from "./components/utils/Backtop";
+import Nav from "@/components/Nav";
+import Toolbar from "@/components/utils/Toolbar";
+import Backtop from "@/components/utils/Backtop";
 export default {
   components: {
     Nav,
@@ -105,5 +105,9 @@ export default {
 }
 .z2 {
   z-index: 2;
+}
+.footer{
+  text-align: center;
+  line-height: 60px;
 }
 </style>

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: sueRimn
  * @Date: 2019-10-21 17:29:56
- * @LastEditors: sueRimn
- * @LastEditTime: 2019-11-14 12:09:11
+ * @LastEditors  : sueRimn
+ * @LastEditTime : 2019-12-26 14:00:31
  -->
 <template>
   <div>
@@ -47,7 +47,7 @@
         <el-col :span="7">
           <section class="my-web">
             <h3 class="banSelect web-desc">本站简介</h3>
-            <section class="web-info">本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介本站简介</section>
+            <section class="web-info">๑乛◡乛๑ 这是我的个人博客，需要资料的自取，欢迎点赞、评论</section>
           </section>
         </el-col>
       </el-row>

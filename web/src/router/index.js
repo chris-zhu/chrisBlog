@@ -16,7 +16,7 @@ const routes = [{
     name: 'home',
     component: () => import('@/views/home/home')
   }, {
-    path: '/release',
+    path: '/release/:articleId',
     name: 'release',
     component: () => import('@/views/release')
   },
@@ -31,6 +31,13 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  console.log('to:',to);
+  console.log('from:', from);
+  console.log('路由守卫');
+  next()
 })
 
 export default router
